@@ -6,21 +6,79 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" href="images/my-avatar.webp" type="image/x-icon" />
+    <link rel="icon" href="images/my-avatar.webp" type="image/webp" />
 
     <link rel="stylesheet" href="css/style.css" />
 
-    <title>I'm Sameer</title>
+    <title>Sameer Muslim | Product Designer & Frontend Developer</title>
     <meta
       name="description"
-      content="I'm a results-driven front-end web developer skilled in HTML5, CSS,x
-    JavaScript, React.js, and Redux Toolkit. With a focus on clean code
-    and performance optimization, I specialize in creating visually
-    appealing and interactive user interfaces."
+      content="Sameer Muslim is a Product Designer and Frontend Developer with 4+ years of experience in UI/UX design, design systems, user research and web development."
     />
+    <meta name="author" content="Sameer Muslim" />
+    <link rel="canonical" href="https://sameermuslim.github.io/my-portfolio/" />
+
+    <!-- Link previews (LinkedIn, WhatsApp, Facebook, X) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sameer Muslim" />
+    <meta
+      property="og:title"
+      content="Sameer Muslim | Product Designer & Frontend Developer"
+    />
+    <meta
+      property="og:description"
+      content="UI/UX design, design systems, user research and frontend development. See my work, resume and publications."
+    />
+    <meta property="og:url" content="https://sameermuslim.github.io/my-portfolio/" />
+    <meta
+      property="og:image"
+      content="https://sameermuslim.github.io/my-portfolio/images/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Structured data for search engines -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Sameer Muslim",
+        "jobTitle": "Product Designer & Frontend Developer",
+        "url": "https://sameermuslim.github.io/my-portfolio/",
+        "image": "https://sameermuslim.github.io/my-portfolio/images/my-avatar1.webp",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Aseel Technology Inc.",
+          "url": "https://aseelapp.com"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/m-sameer-muslim-55a5a4166/",
+          "https://github.com/sameermuslim",
+          "https://codepen.io/sameer-muslim",
+          "https://www.instagram.com/sameermuslim/"
+        ]
+      }
+    </script>
+
+    <!-- Apply the saved theme, or the visitor's system theme, before the page paints -->
+    <script>
+      (function () {
+        var saved = null;
+        try {
+          saved = localStorage.getItem("light-mode");
+        } catch (e) {}
+        var prefersLight =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (saved === "enabled" || (saved !== "disabled" && prefersLight)) {
+          document.documentElement.classList.add("light-mode");
+        }
+      })();
+    </script>
   </head>
   <!-- Body starts here -->
   <body>
@@ -31,10 +89,16 @@
 
       <aside id="left-side" class="left-side defult-panel">
         <!-- top-sidebar starts here -->
-        <div id="show-contacts" class="show-contacts-btn">
-          <p id="show-contatcts-text">Show Contacts</p>
-          <p id="down-arrow">></p>
-        </div>
+        <button
+          type="button"
+          id="show-contacts"
+          class="show-contacts-btn"
+          aria-expanded="false"
+          aria-controls="info"
+        >
+          <span id="show-contacts-text">Show Contacts</span>
+          <span id="down-arrow" aria-hidden="true">></span>
+        </button>
 
         <!-- profile starts here -->
 
@@ -48,7 +112,7 @@
             />
           </div>
           <div class="my-info">
-            <h2 class="my-name">I'm Sameer</h2>
+            <h1 class="my-name">I'm Sameer</h1>
             <p id="my-position" class="my-position">
               Product Designer
               <span class="companeis-link no-link">&</span>
@@ -163,7 +227,7 @@
           <a
             href="https://codepen.io/sameer-muslim"
             aria-label="Codepen account link"
-            target="_blank"
+            target="_blank" rel="noopener noreferrer"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
@@ -178,7 +242,7 @@
           <a
             href="https://www.instagram.com/sameermuslim/"
             aria-label="Instagram account link"
-            target="_blank"
+            target="_blank" rel="noopener noreferrer"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -193,7 +257,7 @@
           <a
             href="https://github.com/sameermuslim"
             aria-label="GitHub account link"
-            target="_blank"
+            target="_blank" rel="noopener noreferrer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +273,7 @@
           <a
             href="https://www.linkedin.com/in/m-sameer-muslim-55a5a4166/"
             aria-label="Linkedin account link"
-            target="_blank"
+            target="_blank" rel="noopener noreferrer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -222,7 +286,7 @@
               />
             </svg>
           </a>
-          <!-- <a href="https://twitter.com/SameerBaha" target="_blank"></a>
+          <!-- <a href="https://twitter.com/SameerBaha" target="_blank" rel="noopener noreferrer"></a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -235,39 +299,71 @@
             </svg>
           </a> -->
         </div>
-        <div id="mode-toggle-btn" class="defult-panel mode-toggle-btn">
-          <div id="mood-btn" class="toggle-mode dark">
-            <img
-              height="12px"
-              width="12px"
+        <button
+          type="button"
+          id="mode-toggle-btn"
+          class="defult-panel mode-toggle-btn"
+          aria-label="Light mode"
+          aria-pressed="false"
+        >
+          <span id="mood-btn" class="toggle-mode dark">
+            <img loading="lazy" decoding="async"
+              height="12"
+              width="12"
               id="mood-icon"
               class="active"
               src="images/sun.svg"
-              alt="light mode icon, Sun"
+              alt=""
             />
-          </div>
-        </div>
+          </span>
+        </button>
       </aside>
       <!-- left-side Ends here -->
 
       <main class="right-side defult-panel">
-        <div class="menu-bar">
+        <nav class="menu-bar" aria-label="Sections">
           <ul id="menu-bar-ul" class="menu-bar-ul">
             <li>
-              <button class="menu-bar-link about-btn active">About</button>
+              <a
+                href="#about"
+                data-section="about"
+                class="menu-bar-link about-btn active"
+                aria-current="page"
+                >About</a
+              >
             </li>
-            <li><button class="menu-bar-link resume-btn">Resume</button></li>
             <li>
-              <button class="menu-bar-link portfolio-btn">Portfolio</button>
+              <a href="#resume" data-section="resume" class="menu-bar-link resume-btn"
+                >Resume</a
+              >
             </li>
-            <li><button class="menu-bar-link blog-btn">Blog</button></li>
-            <li><button class="menu-bar-link contact-btn">Contact</button></li>
+            <li>
+              <a
+                href="#portfolio"
+                data-section="portfolio"
+                class="menu-bar-link portfolio-btn"
+                >Portfolio</a
+              >
+            </li>
+            <li>
+              <a href="#blog" data-section="blog" class="menu-bar-link blog-btn"
+                >Blog</a
+              >
+            </li>
+            <li>
+              <a
+                href="#contact"
+                data-section="contact"
+                class="menu-bar-link contact-btn"
+                >Contact</a
+              >
+            </li>
           </ul>
-        </div>
+        </nav>
 
         <!-- About Section  -->
         <article id="about-section" class="the-section about-section active">
-          <h1 class="big-title">About Me</h1>
+          <h2 class="big-title">About Me</h2>
           <div class="dash"></div>
           <p class="body-text">
             I’m a Product Designer and Frontend Developer passionate about
@@ -394,10 +490,10 @@
             <div class="section-main-div">
               <ul class="section-list test-mo horizontal snaps-inline">
                 <li class="testimonial-list-itme">
-                  <div class="card-item team">
+                  <div class="card-item team" tabindex="0" role="button" aria-haspopup="dialog">
                     <div class="team-info min-test">
                       <div class="photo">
-                        <img src="images/Rod.webp" alt="Rod McLeod's Avatar" />
+                        <img loading="lazy" decoding="async" src="images/Rod.webp" alt="Rod McLeod's Avatar" />
                       </div>
                       <h3 class="card-item-title">Rod A. McLeod</h3>
                       <span style="display: none" class="card-item-position"
@@ -419,10 +515,10 @@
                 </li>
 
                 <li class="testimonial-list-itme">
-                  <div class="card-item team">
+                  <div class="card-item team" tabindex="0" role="button" aria-haspopup="dialog">
                     <div class="team-info min-test">
                       <div class="photo">
-                        <img
+                        <img loading="lazy" decoding="async"
                           src="images/nancy-avatar.webp"
                           alt="Nancy Speidel's Avatar"
                         />
@@ -445,10 +541,10 @@
                   </div>
                 </li>
                 <li class="testimonial-list-itme">
-                  <div class="card-item team">
+                  <div class="card-item team" tabindex="0" role="button" aria-haspopup="dialog">
                     <div class="team-info min-test">
                       <div class="photo">
-                        <img
+                        <img loading="lazy" decoding="async"
                           src="images/Niyaz-avatar.webp"
                           alt="Niyaz M. Khairy's avatar"
                         />
@@ -470,10 +566,10 @@
                   </div>
                 </li>
                 <li class="testimonial-list-itme">
-                  <div class="card-item team">
+                  <div class="card-item team" tabindex="0" role="button" aria-haspopup="dialog">
                     <div class="team-info min-test">
                       <div class="photo">
-                        <img
+                        <img loading="lazy" decoding="async"
                           src="images/Wares-avatar.webp"
                           alt="Wares avatar"
                         />
@@ -504,16 +600,16 @@
 
           <div id="full-screen-dialog" class="full-screen-dialog">
             <div id="overlay" class="overlay" data-overlay=""></div>
-            <div id="dialog-box" class="dialog-box defult-panel">
-              <button id="dialog-close-btn" class="dialog-close-btn">X</button>
+            <div id="dialog-box" class="dialog-box defult-panel" role="dialog" aria-modal="true" aria-labelledby="dialog-person-name">
+              <button type="button" id="dialog-close-btn" class="dialog-close-btn" aria-label="Close testimonial">X</button>
 
               <div class="dialog-imgs">
                 <div class="dialog-profile">
-                  <img
+                  <img loading="lazy" decoding="async"
                     height="100px"
                     width="100px"
                     src=""
-                    alt="dialog profile avatar"
+                    alt=""
                     class="dialog-person-img"
                   />
                 </div>
@@ -532,7 +628,7 @@
               </div>
 
               <div class="dialog-text-box">
-                <h3 class="dialog-person-name"></h3>
+                <h3 id="dialog-person-name" class="dialog-person-name"></h3>
                 <span class="dialog-person-position"></span>
                 <p class="dialog-date"></p>
                 <p class="dialog-text"></p>
@@ -541,7 +637,7 @@
           </div>
         </article>
         <article id="resume-section" class="the-section resume-section">
-          <h1 class="big-title">Resume</h1>
+          <h2 class="big-title">Resume</h2>
           <div class="dash"></div>
           <div class="resume">
             <div class="resume-section-name">
@@ -567,7 +663,7 @@
                   >
                   <a
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                     href="https://www.coursera.org/learn/visual-elements-user-interface-design"
                     attr=""
                     data-description="Link of the Course"
@@ -600,7 +696,7 @@
                   <span class="add-sign">@</span>
                   <a
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                     href="https://www.coursera.org/learn/principles-of-ux-ui-design"
                     attr=""
                     data-description="Link of the Course"
@@ -642,7 +738,7 @@
                   <span class="add-sign">@</span>
                   <a
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                     href="https://www.udemy.com/course/the-complete-web-development-bootcamp/"
                     attr=""
                     data-description="Link of the Course"
@@ -683,7 +779,7 @@
                   <a
                     href="https://developers.google.com/learn/pathways/intro-to-flutter"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     Google Developers</a
                   >
@@ -714,7 +810,7 @@
                   <a
                     href="https://www.udacity.com/course/android-basics-user-input--cd0343"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     Udacity</a
                   >
@@ -828,7 +924,7 @@
                   <a
                     href="https://aseelapp.com/buy-good"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     Buy Good</a
                   >
@@ -837,7 +933,7 @@
                   <a
                     href="https://aseelapp.com/about"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     Aseel Technology Inc.
                   </a>
@@ -882,7 +978,7 @@
                   <a
                     href="https://aseelapp.com/about"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     Aseel Technology Inc.
                   </a>
@@ -903,14 +999,14 @@
                     <a
                       href="https://aseelapp.com/about"
                       class="companeis-link"
-                      target="_blank"
+                      target="_blank" rel="noopener noreferrer"
                       >Sell Good</a
                     >
                     platform and the
                     <a
                       href="https://aseelapp.com/about"
                       class="companeis-link"
-                      target="_blank"
+                      target="_blank" rel="noopener noreferrer"
                       >Seller Landing Page</a
                     >
                     , and implemented improvements for the Aseel website,
@@ -942,7 +1038,7 @@
                   <a
                     href="https://isaw.org/"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     iSAW International</a
                   >
@@ -989,7 +1085,7 @@
                     Developed and optimized responsive portfolio websites
                     <a
                       class="companeis-link"
-                      target="_blank"
+                      target="_blank" rel="noopener noreferrer"
                       href="niyaz.design"
                     >
                       niyaz.desgin</a
@@ -999,7 +1095,7 @@
                     Launched a dynamic website for
                     <a
                       class="companeis-link"
-                      target="_blank"
+                      target="_blank" rel="noopener noreferrer"
                       href="https://thetriangletranch.com/"
                     >
                       The Triangle Tranch
@@ -1055,12 +1151,12 @@
                   <a
                     href="https://ba.edu.af/"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     Balkh University
                   </a>
                   <span class="add-sign">&</span>
-                  <a class="companeis-link no-link" target="_blank">
+                  <a class="companeis-link no-link" target="_blank" rel="noopener noreferrer">
                     Sadat Private University
                   </a>
                 </h4>
@@ -1135,7 +1231,7 @@
                   <a
                     href="https://saawis.com/"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     Saawis</a
                   >
@@ -1170,7 +1266,7 @@
                   Co-founder and Editor in chief (Part-Time)
                   <span class="add-sign">@</span>
                   <a
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                     href="https://pubhtml5.com/homepage/vazt/"
                     class="companeis-link"
                   >
@@ -1230,7 +1326,7 @@
                   <a
                     href="https://www.facebook.com/gdgbalkh/"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     GDG Balkh</a
                   >
@@ -1269,7 +1365,7 @@
                   <a
                     href="https://awn-af.org/"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     Afghan Women’s Network-Kundoz</a
                   >
@@ -1301,7 +1397,7 @@
                   <a
                     href="https://www.facebook.com/futureleaderssummit2019/"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     Future Leader Summit
                   </a>
@@ -1341,7 +1437,7 @@
                   <a
                     href="https://www.facebook.com/gdgbalkh/"
                     class="companeis-link"
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                   >
                     GDG Kabul</a
                   >
@@ -1399,7 +1495,7 @@
               </li>
             </ol>
 
-            <h1 class="section-title">My Skills</h1>
+            <h2 class="section-title">My Skills</h2>
 
             <div class="skills-box">
               <ul class="skills-list">
@@ -1521,7 +1617,7 @@
           </div>
         </article>
         <article id="portfolio-section" class="the-section portfolio-section">
-          <h1 class="big-title">Portfolio</h1>
+          <h2 class="big-title">Portfolio</h2>
           <div class="dash"></div>
           <div class="protfolio">
             <ul class="category-list">
@@ -1539,7 +1635,7 @@
             <ul class="section-list projects">
               <li class="port-list-li">
                 <a
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   href="https://github.com/sameermuslim/Toosha"
                 >
                   <div class="card-item-portfolio active">
@@ -1557,7 +1653,7 @@
                           />
                         </svg>
                       </div>
-                      <img
+                      <img loading="lazy" decoding="async"
                         class="bunner-img"
                         src="images/banners/Tosha-app.webp"
                         alt=" Toosha mobile app banner"
@@ -1578,7 +1674,7 @@
                 </a>
               </li>
               <li class="port-list-li">
-                <a target="_blank" href="https://niyaz.design">
+                <a target="_blank" rel="noopener noreferrer" href="https://niyaz.design">
                   <div class="card-item-portfolio active">
                     <div class="card-port-f-bunner">
                       <div class="bunner-preview">
@@ -1594,7 +1690,7 @@
                           />
                         </svg>
                       </div>
-                      <img
+                      <img loading="lazy" decoding="async"
                         class="bunner-img"
                         src="images/banners/neyaz-design.webp"
                         alt=" Niyaz.design website banner"
@@ -1615,7 +1711,7 @@
               </li>
               <li class="port-list-li">
                 <a
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   href="https://github.com/sameermuslim/Molkiyat"
                 >
                   <div class="card-item-portfolio active">
@@ -1633,7 +1729,7 @@
                           />
                         </svg>
                       </div>
-                      <img
+                      <img loading="lazy" decoding="async"
                         class="bunner-img"
                         src="images/banners/mamela-banner.webp"
                         alt=" Maamela mobile app banner"
@@ -1654,7 +1750,7 @@
               </li>
               <li class="port-list-li">
                 <a
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   href="https://sameermuslim.github.io/Sameer-MK-portfolio/"
                 >
                   <div class="card-item-portfolio active">
@@ -1672,7 +1768,7 @@
                           />
                         </svg>
                       </div>
-                      <img
+                      <img loading="lazy" decoding="async"
                         class="bunner-img"
                         src="images/banners/Screenshot-sameer-mk.webp"
                         alt=" MK Sameer website  banner"
@@ -1691,7 +1787,7 @@
                 </a>
               </li>
               <li class="port-list-li">
-                <a href="https://thetriangletranch.com/" target="_blank">
+                <a href="https://thetriangletranch.com/" target="_blank" rel="noopener noreferrer">
                   <div class="card-item-portfolio active">
                     <div class="card-port-f-bunner">
                       <div class="bunner-preview">
@@ -1707,7 +1803,7 @@
                           />
                         </svg>
                       </div>
-                      <img
+                      <img loading="lazy" decoding="async"
                         class="bunner-img"
                         src="images/banners/the-triangle-t.webp"
                         alt=" Triangle T website  banner"
@@ -1729,7 +1825,7 @@
               </li>
               <li class="port-list-li">
                 <a
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   href="https://github.com/sameermuslim/faq-android-app"
                 >
                   <div class="card-item-portfolio active">
@@ -1747,7 +1843,7 @@
                           />
                         </svg>
                       </div>
-                      <img
+                      <img loading="lazy" decoding="async"
                         class="bunner-img"
                         src="images/banners/faq-app.webp"
                         alt=" FAQ Mobile app banner"
@@ -1770,7 +1866,7 @@
 
               <li class="port-list-li">
                 <a
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   href="https://github.com/sameermuslim/sticky-wall"
                 >
                   <div class="card-item-portfolio active">
@@ -1788,7 +1884,7 @@
                           />
                         </svg>
                       </div>
-                      <img
+                      <img loading="lazy" decoding="async"
                         class="bunner-img"
                         src="images/banners/screenshot-stikcky-wall.webp"
                         alt=" sticky-wall website  banner"
@@ -1809,7 +1905,7 @@
               </li>
               <li class="port-list-li">
                 <a
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   href="https://github.com/sameermuslim/50projects-50days"
                 >
                   <div class="card-item-portfolio active">
@@ -1827,7 +1923,7 @@
                           />
                         </svg>
                       </div>
-                      <img
+                      <img loading="lazy" decoding="async"
                         class="bunner-img"
                         src="images/banners/50Projects50days.webp"
                         alt=" 50 Projects 50 Days website  banner"
@@ -1848,7 +1944,7 @@
 
               <li class="port-list-li">
                 <a
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   href="https://github.com/sameermuslim/css-animation"
                 >
                   <div class="card-item-portfolio active">
@@ -1866,7 +1962,7 @@
                           />
                         </svg>
                       </div>
-                      <img
+                      <img loading="lazy" decoding="async"
                         class="bunner-img"
                         src="images/banners/screenshot-animation.webp"
                         alt="Animation website  banner"
@@ -1892,16 +1988,16 @@
         </article>
 
         <article id="blog-section" class="the-section blog-section">
-          <h1 class="big-title">Blog</h1>
+          <h2 class="big-title">Blog</h2>
           <div class="dash"></div>
 
           <div class="section blogs">
             <ul class="section-list blog-list">
               <li>
-                <a target="_blank" href="https://pubhtml5.com/vazt/udhn/">
+                <a target="_blank" rel="noopener noreferrer" href="https://pubhtml5.com/vazt/udhn/">
                   <div class="card-item-blog">
                     <div class="blog-banner">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src="images/banners/zerone0.webp"
                         alt="ZerOneAf Magazine Blog banner"
                         class="blog-img"
@@ -1913,9 +2009,9 @@
                         <span class="dot">.</span>
                         <p class="blog date">July 17, 2017</p>
                       </span>
-                      <h1 class="card-blog-big-title">
+                      <h3 class="card-blog-big-title">
                         0-1 Magazine 0th Edition
-                      </h1>
+                      </h3>
                       <p class="card-blog-text">
                         The first electronic, educational, scientific and
                         technological magazine in Afghanistan aims to strengthen
@@ -1927,10 +2023,10 @@
                 </a>
               </li>
               <li>
-                <a target="_blank" href="https://pubhtml5.com/vazt/zceq/">
+                <a target="_blank" rel="noopener noreferrer" href="https://pubhtml5.com/vazt/zceq/">
                   <div class="card-item-blog">
                     <div class="blog-banner">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src="images/banners/zerone1.webp"
                         alt="ZerOneAf Magazine Blog banner"
                         class="blog-img"
@@ -1942,9 +2038,9 @@
                         <span class="dot">.</span>
                         <p class="blog date">Sep 10, 2018</p>
                       </span>
-                      <h1 class="card-blog-big-title">
+                      <h3 class="card-blog-big-title">
                         0-1 Magazine 1st Edition
-                      </h1>
+                      </h3>
                       <p class="card-blog-text">
                         The first edition of ZerOneAF magazine has reached you.
                         In this edition, you can read new and good content, such
@@ -1957,10 +2053,10 @@
                 </a>
               </li>
               <li>
-                <a target="_blank" href="https://pubhtml5.com/vazt/tjql/">
+                <a target="_blank" rel="noopener noreferrer" href="https://pubhtml5.com/vazt/tjql/">
                   <div class="card-item-blog">
                     <div class="blog-banner">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src="images/banners/zerone2.webp"
                         alt="ZerOneAf Magazine Blog banner"
                         class="blog-img"
@@ -1972,9 +2068,9 @@
                         <span class="dot">.</span>
                         <p class="blog date">Feb 1, 2018</p>
                       </span>
-                      <h1 class="card-blog-big-title">
+                      <h3 class="card-blog-big-title">
                         0-1 Magazine 2nd Edition
-                      </h1>
+                      </h3>
                       <p class="card-blog-text">
                         In the second edition of ZerOneAF magazine, you will
                         read about social network addicts, important tips for
@@ -1987,10 +2083,10 @@
                 </a>
               </li>
               <li>
-                <a target="_blank" href="https://pubhtml5.com/vazt/qmhy/">
+                <a target="_blank" rel="noopener noreferrer" href="https://pubhtml5.com/vazt/qmhy/">
                   <div class="card-item-blog">
                     <div class="blog-banner">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src="images/banners/zerone3.webp"
                         alt="ZerOneAf Magazine Blog banner"
                         class="blog-img"
@@ -2002,9 +2098,9 @@
                         <span class="dot">.</span>
                         <p class="blog date">Mar 21, 2018</p>
                       </span>
-                      <h1 class="card-blog-big-title">
+                      <h3 class="card-blog-big-title">
                         0-1 Magazine 3rd Edition
-                      </h1>
+                      </h3>
                       <p class="card-blog-text">
                         The third version of ZerOneAf includes these contents:
                         Internet springboard, Would it be possible to make a new
@@ -2017,10 +2113,10 @@
                 </a>
               </li>
               <li>
-                <a target="_blank" href="https://pubhtml5.com/vazt/ejoi/">
+                <a target="_blank" rel="noopener noreferrer" href="https://pubhtml5.com/vazt/ejoi/">
                   <div class="card-item-blog">
                     <div class="blog-banner">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src="images/banners/zerone4.webp"
                         alt="ZerOneAf Magazine Blog banner"
                         class="blog-img"
@@ -2032,9 +2128,9 @@
                         <span class="dot">.</span>
                         <p class="blog date">Jan 5, 2019</p>
                       </span>
-                      <h1 class="card-blog-big-title">
+                      <h3 class="card-blog-big-title">
                         0-1 Magazine 4th Edition
-                      </h1>
+                      </h3>
                       <p class="card-blog-text">
                         In this edition, you will read: Alphabet numbers are an
                         effective way to advertise, new gadgets, My
@@ -2047,10 +2143,10 @@
                 </a>
               </li>
               <li>
-                <a target="_blank" href="https://pubhtml5.com/vazt/wflr/">
+                <a target="_blank" rel="noopener noreferrer" href="https://pubhtml5.com/vazt/wflr/">
                   <div class="card-item-blog">
                     <div class="blog-banner">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src="images/banners/zerone5.webp"
                         alt="ZerOneAf Magazine Blog banner"
                         class="blog-img"
@@ -2062,9 +2158,9 @@
                         <span class="dot">.</span>
                         <p class="blog date">Mar 27, 2019</p>
                       </span>
-                      <h1 class="card-blog-big-title">
+                      <h3 class="card-blog-big-title">
                         0-1 Magazine 5th Edition
-                      </h1>
+                      </h3>
                       <p class="card-blog-text">
                         Here in this version you will read: Google Stadia,
                         Facebook will become the central bank of the world, how
@@ -2079,12 +2175,12 @@
           </div>
         </article>
         <article id="contact-section" class="the-section contact-section">
-          <h1 class="big-title">Contact</h1>
+          <h2 class="big-title">Contact</h2>
           <div class="dash"></div>
           <div class="contact">
             <div class="map-box">
               <iframe
-                id="map-container"
+                id="map-container" title="Map of Mazar-i-Sharif, Afghanistan" loading="lazy"
                 class="map-container"
                 src=""
                 frameborder="0"
