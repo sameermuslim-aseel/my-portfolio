@@ -18,10 +18,13 @@ function richText(text) {
   );
 }
 
-// An icon from the sprite at the top of index.html
+// An icon from the sprite at the top of index.html.
+// The outer viewBox must start at 0 0: <use> places the symbol at the origin,
+// and the symbol's own viewBox (which may start elsewhere) handles the offset.
 function icon(name, className = "") {
   const symbol = document.getElementById("icon-" + name);
-  const viewBox = symbol ? symbol.getAttribute("viewBox") : "0 0 50 50";
+  const [, , w, h] = (symbol ? symbol.getAttribute("viewBox") : "0 0 50 50").split(/\s+/);
+  const viewBox = `0 0 ${w} ${h}`;
   const cls = className ? ` class="${className}"` : "";
   return `<svg${cls} viewBox="${viewBox}" fill="var(--icon-color)" aria-hidden="true"><use href="#icon-${name}" /></svg>`;
 }
