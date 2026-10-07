@@ -18,13 +18,13 @@
     hsl(240, 2%, 13%);
   --bg-gradient-yellow-1: linear-gradient(
     to bottom right,
-    hsl(45, 100%, 71%) 0%,
-    hsla(36, 100%, 69%, 0) 50%
+    hsl(213, 94%, 68%) 0%,
+    hsla(217, 91%, 60%, 0) 50%
   );
   --bg-gradient-yellow-2: linear-gradient(
       135deg,
-      hsla(45, 100%, 71%, 0.251) 0%,
-      hsla(35, 100%, 68%, 0) 59.86%
+      hsla(213, 94%, 68%, 0.251) 0%,
+      hsla(217, 91%, 60%, 0) 59.86%
     ),
     hsl(240, 2%, 13%);
   --border-gradient-onyx: linear-gradient(
@@ -39,8 +39,8 @@
   );
   --text-gradient-yellow: linear-gradient(
     to right,
-    hsl(39, 93%, 69%),
-    hsl(35, 90%, 54%)
+    hsl(213, 97%, 78%),
+    hsl(217, 91%, 60%)
   );
 
   /* solid */
@@ -54,20 +54,21 @@
   --smoky-black: hsl(0, 0%, 7%);
   --white-1: hsl(0, 0%, 100%);
   --white-2: hsl(0, 0%, 98%);
-  --orange-yellow-crayola: hsl(45, 100%, 72%);
-  --title-orange-yellow-crayola: hsl(45, 100%, 72%);
-  --text-orange-yellow-crayola: hsl(45, 100%, 72%);
-  --nav-link-active: hsl(45, 100%, 72%);
-  --vegas-gold: hsl(45, 54%, 58%);
+  /* accent: ocean blue (names kept from the original yellow theme) */
+  --orange-yellow-crayola: hsl(213, 94%, 70%);
+  --title-orange-yellow-crayola: hsl(213, 94%, 70%);
+  --text-orange-yellow-crayola: hsl(213, 94%, 70%);
+  --nav-link-active: hsl(213, 94%, 70%);
+  --vegas-gold: hsl(213, 55%, 64%);
   --light-gray: hsl(0, 0%, 84%);
   --light-gray-70: hsla(0, 0%, 84%, 0.7);
   --menu-bar-text: var(--light-gray-70);
   --bittersweet-shimmer: hsl(0, 43%, 51%);
-  --icon-color: #fcc05e;
-  --active-link-color: #fcc05e;
+  --icon-color: #60a5fa;
+  --active-link-color: #60a5fa;
   --map-box-filter: grayscale(1) invert(1);
 
-  --ops-text-color: hsl(45, 100%, 72%);
+  --ops-text-color: hsl(213, 94%, 70%);
   /**
    * typography
    */
@@ -111,48 +112,71 @@
 }
 
 /*
- * Light theme: white cards on a warm paper-gray page, near-black text,
- * and a deeper amber accent so links and titles stay readable on white.
+ * Light theme (ocean blue). Change the palette by editing the --lt-* tokens below;
+ * everything else in light mode is derived from them.
  */
 .light-mode {
-  /* surfaces */
-  --smoky-black: #f3f0ea; /* page background */
-  --eerie-black-2: #ffffff; /* panels */
-  --eerie-black-1: #fffaf0; /* inside icon boxes */
-  --onyx: #f5efe4; /* chips, small buttons */
-  --jet: #e9e3d8; /* borders and dividers */
-  --overlay-background: hsl(30, 20%, 10%);
+  /* neutrals (cool slate) */
+  --lt-page: #f2f5f9; /* page background */
+  --lt-chip: #eef2f8; /* chips, small buttons */
+  --lt-chip-border: #d6deea;
+  --lt-border: #e2e8f0; /* borders and dividers */
+  --lt-ink: #0f172a; /* headings, strong text */
+  --lt-ink-2: #1e293b; /* body */
+  --lt-text: #475569; /* paragraphs */
+  --lt-muted: #64748b; /* labels */
+  --lt-nav: #52607a; /* menu links */
+  --lt-shadow-rgb: 15, 23, 42;
+  --lt-overlay: #0f172a;
 
-  /* text */
-  --white-1: #1f1a14; /* headings, strong text */
-  --white-2: #2b251e; /* body */
-  --light-gray: #4d453c; /* paragraphs */
-  --light-gray-70: #7b7166; /* muted labels */
+  /* accent (ocean blue) */
+  --lt-accent: #2563eb; /* icons */
+  --lt-accent-2: #60a5fa; /* gradient partner */
+  --lt-accent-strong: #1d4ed8; /* text: links, titles, active tab */
+  --lt-tint: #eff5ff; /* light accent fills */
+  --lt-tint-2: #dbe8fe;
+  --lt-tint-strong: #bfd5fd;
+  --lt-tint-soft: #f7faff;
+  --lt-card-1: #ffffff;
+  --lt-card-2: #f8fafd;
+  --lt-line: #bcd2f8; /* accent edge of cards */
+  --lt-line-soft: #d3e1f8; /* menu edge, resume timeline */
 
-  /* accent */
-  --icon-color: #d97706;
-  --active-link-color: #b45309;
-  --title-orange-yellow-crayola: #b45309; /* links, project titles */
-  --text-orange-yellow-crayola: #b45309;
-  --nav-link-active: #b45309;
-  --vegas-gold: #a16207; /* resume dates */
-  --ops-text-color: #7c4a03;
-  --menu-bar-text: #6b6157;
+  /* mapping onto the variables the rest of the stylesheet uses */
+  --smoky-black: var(--lt-page);
+  --eerie-black-2: #ffffff;
+  --eerie-black-1: var(--lt-tint-soft);
+  --onyx: var(--lt-chip);
+  --jet: var(--lt-border);
+  --overlay-background: var(--lt-overlay);
+
+  --white-1: var(--lt-ink);
+  --white-2: var(--lt-ink-2);
+  --light-gray: var(--lt-text);
+  --light-gray-70: var(--lt-muted);
+  --menu-bar-text: var(--lt-nav);
+
+  --icon-color: var(--lt-accent);
+  --active-link-color: var(--lt-accent-strong);
+  --title-orange-yellow-crayola: var(--lt-accent-strong);
+  --text-orange-yellow-crayola: var(--lt-accent-strong);
+  --nav-link-active: var(--lt-accent-strong);
+  --vegas-gold: var(--lt-accent-strong);
+  --ops-text-color: var(--lt-accent-strong);
   --map-box-filter: none;
 
-  --bg-gradient-onyx: linear-gradient(to bottom right, #fdf3e1 0%, #f8e6c4 100%);
-  --bg-gradient-jet: linear-gradient(to bottom right, #fffdf9 0%, #fbf7f0 100%);
-  --border-gradient-onyx: linear-gradient(to bottom right, #f0d6a4 0%, #ece6dc 55%);
-  --bg-gradient-yellow-1: linear-gradient(to bottom right, #fcd88a 0%, #fbe7bf 90%);
-  --text-gradient-yellow: linear-gradient(to right, #f59e0b, #d97706);
+  --bg-gradient-onyx: linear-gradient(to bottom right, var(--lt-tint) 0%, var(--lt-tint-2) 100%);
+  --bg-gradient-jet: linear-gradient(to bottom right, var(--lt-card-1) 0%, var(--lt-card-2) 100%);
+  --border-gradient-onyx: linear-gradient(to bottom right, var(--lt-line) 0%, var(--lt-border) 55%);
+  --bg-gradient-yellow-1: linear-gradient(to bottom right, var(--lt-tint-strong) 0%, var(--lt-tint-2) 90%);
+  --text-gradient-yellow: linear-gradient(to right, var(--lt-accent-2), var(--lt-accent));
   --menu-gradient-onyx: rgba(255, 255, 255, 0.85);
 
-  /* soft, warm shadows instead of gray ones */
-  --shadow-1: 0 2px 10px rgba(80, 55, 20, 0.06);
-  --shadow-2: 0 6px 20px rgba(80, 55, 20, 0.07);
-  --shadow-3: 0 12px 32px rgba(80, 55, 20, 0.08);
-  --shadow-4: 0 12px 30px rgba(80, 55, 20, 0.06);
-  --shadow-5: 0 24px 64px rgba(40, 25, 5, 0.2);
+  --shadow-1: 0 2px 10px rgba(var(--lt-shadow-rgb), 0.06);
+  --shadow-2: 0 6px 20px rgba(var(--lt-shadow-rgb), 0.07);
+  --shadow-3: 0 12px 32px rgba(var(--lt-shadow-rgb), 0.08);
+  --shadow-4: 0 12px 30px rgba(var(--lt-shadow-rgb), 0.06);
+  --shadow-5: 0 24px 64px rgba(var(--lt-shadow-rgb), 0.25);
 
   color: var(--white-2);
 }
@@ -160,22 +184,22 @@
 /* Light theme details that a color variable alone can't express */
 .light-mode .left-side,
 .light-mode .right-side {
-  box-shadow: 0 1px 2px rgba(80, 55, 20, 0.04), 0 10px 30px rgba(80, 55, 20, 0.05);
+  box-shadow: 0 1px 2px rgba(var(--lt-shadow-rgb), 0.04), 0 10px 30px rgba(var(--lt-shadow-rgb), 0.05);
 }
 .light-mode .menu-bar {
-  border-color: #efdcb8;
+  border-color: var(--lt-line-soft);
 }
 .light-mode .mode-toggle-btn {
   background: var(--onyx);
-  border-color: #e3d6c0;
+  border-color: var(--lt-chip-border);
 }
 .light-mode .toggle-mode {
   background: #ffffff;
-  border-color: #e3d6c0;
-  box-shadow: 0 1px 3px rgba(80, 55, 20, 0.18);
+  border-color: var(--lt-chip-border);
+  box-shadow: 0 1px 3px rgba(var(--lt-shadow-rgb), 0.18);
 }
 .light-mode .resume-list-item:not(:last-child)::after {
-  background: #ead9bb;
+  background: var(--lt-line-soft);
 }
 
 *,
