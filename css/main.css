@@ -1216,8 +1216,9 @@ html[data-theme="dark"] .theme-btn .i-moon {
   box-shadow: 0 20px 50px -30px rgba(0, 0, 0, 0.25);
 }
 .versions-top {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 84px 220px;
+  gap: 16px;
   padding: 14px 20px;
   border-bottom: 1px solid var(--line);
   font: 500 12px var(--f-mono);
@@ -1230,14 +1231,14 @@ html[data-theme="dark"] .theme-btn .i-moon {
   font-weight: 500;
 }
 .versions-top span:last-child {
-  width: 214px;
+  text-align: end;
 }
 .versions-list {
   list-style: none;
 }
 .version a {
   display: grid;
-  grid-template-columns: 62px 1fr 170px 28px;
+  grid-template-columns: 62px 1fr 84px 220px;
   align-items: center;
   gap: 16px;
   padding: 15px 20px;
@@ -1280,9 +1281,33 @@ html[data-theme="dark"] .theme-btn .i-moon {
   text-transform: uppercase;
   color: var(--muted);
 }
+/* destination pill: GitHub or the live domain */
 .version-go {
-  color: var(--muted);
-  font-size: 18px;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  font: 12px var(--f-mono);
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.version-go span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.version-go svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+.version-go i {
+  font-style: normal;
   transition: transform 0.25s var(--ease);
 }
 .version a:hover,
@@ -1298,7 +1323,12 @@ html[data-theme="dark"] .theme-btn .i-moon {
 .version a:focus-visible .version-n i {
   background: var(--select);
 }
-.version a:hover .version-go {
+.version a:hover .version-go,
+.version a:focus-visible .version-go {
+  border-color: var(--select);
+  background: var(--surface);
+}
+.version a:hover .version-go i {
   transform: translate(2px, -2px);
 }
 .version a:hover .version-name span {
@@ -1349,12 +1379,18 @@ html[data-theme="dark"] .theme-btn .i-moon {
 }
 @media (max-width: 600px) {
   .version a {
-    grid-template-columns: 50px 1fr 20px;
+    grid-template-columns: 50px 1fr auto;
     gap: 10px;
     padding: 14px 16px;
   }
   .version-kind,
-  .versions-top span:last-child {
+  .versions-top span:not(:first-child) {
+    display: none;
+  }
+  .versions-top {
+    grid-template-columns: 1fr;
+  }
+  .version-go span {
     display: none;
   }
   .version-name span {

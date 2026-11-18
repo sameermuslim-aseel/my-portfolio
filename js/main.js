@@ -84,18 +84,26 @@ const featured = CASES.map((c) => c.image);
 // shown as a "version history" list: older work, newest first, preview on hover
 const archive = DATA.projects.filter((p) => !featured.includes(p.image));
 const SHOWN = 5;
+// where each link goes, so nobody clicks blind: GitHub for code, the domain for live sites
+const ICON_GITHUB = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>';
+const ICON_WEB = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 8h13M8 1.5c2 2 2.6 4.2 2.6 6.5S10 12.5 8 14.5M8 1.5C6 3.5 5.4 5.7 5.4 8S6 12.5 8 14.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>';
+const destination = (url) => {
+  const host = new URL(url).hostname.replace(/^www\./, "");
+  return host === "github.com" ? { icon: ICON_GITHUB, label: "GitHub" } : { icon: ICON_WEB, label: host };
+};
 $("#archive").innerHTML = archive
-  .map(
-    (p, i) => `
+  .map((p, i) => {
+    const to = destination(p.url);
+    return `
   <li class="version${i >= SHOWN ? " extra" : ""}">
-    <a href="${p.url}" target="_blank" rel="noopener noreferrer" data-preview="${p.image}">
+    <a href="${p.url}" target="_blank" rel="noopener noreferrer" data-preview="${p.image}" title="${t("opensOn", "Opens on")} ${to.label}">
       <span class="version-n"><i></i>v0.${archive.length - i}</span>
       <span class="version-name"><b>${escapeHtml(p.title)}</b> <span>${escapeHtml(p.short || p.category)}</span></span>
       <span class="version-kind">${escapeHtml(p.kind || p.category)}</span>
-      <span class="version-go" aria-hidden="true">↗</span>
+      <span class="version-go">${to.icon}<span>${to.label}</span><i aria-hidden="true">↗</i></span>
     </a>
-  </li>`
-  )
+  </li>`;
+  })
   .join("");
 $("#versions-count").innerHTML = `<b>${num(archive.length)}</b> ${t("earlierVersions", "earlier versions")}`;
 

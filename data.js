@@ -685,19 +685,6 @@ const SITE_DATA = {
       description: "An Android property-listing app for the Afghan market. Users can search houses, flats and rooms by province, type and price range, and post their own listings."
     },
     {
-      title: "MK portfolio",
-      short: "My earlier personal site",
-      kind: "Website",
-      category: "Web Development",
-      tags: [
-        "Web Development"
-      ],
-      url: "https://sameermuslim.github.io/Sameer-MK-portfolio/",
-      image: "images/banners/Screenshot-sameer-mk.webp",
-      alt: "MK Sameer website banner",
-      description: "A portfolio website showcasing projects and services, and a glimpse into my skills and interests."
-    },
-    {
       title: "The Triangle T Ranch",
       short: "Historic Arizona guest ranch",
       kind: "Website",
