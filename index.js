@@ -1,3 +1,185 @@
+// ---------------------------------------------------------------------------
+// Build the repeated sections (projects, resume, testimonials...) from data.js
+// ---------------------------------------------------------------------------
+
+function escapeHtml(text) {
+  const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  return String(text).replace(/[&<>"']/g, (c) => map[c]);
+}
+
+function externalLink(url, html, className = "companeis-link") {
+  return `<a class="${className}" href="${url}" target="_blank" rel="noopener noreferrer">${html}</a>`;
+}
+
+// Plain text where [link text](https://...) becomes a link
+function richText(text) {
+  return escapeHtml(text).replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, label, url) =>
+    externalLink(url, label)
+  );
+}
+
+// An icon from the sprite at the top of index.html
+function icon(name, className = "") {
+  const symbol = document.getElementById("icon-" + name);
+  const viewBox = symbol ? symbol.getAttribute("viewBox") : "0 0 50 50";
+  const cls = className ? ` class="${className}"` : "";
+  return `<svg${cls} viewBox="${viewBox}" fill="var(--icon-color)" aria-hidden="true"><use href="#icon-${name}" /></svg>`;
+}
+
+const render = {
+  services: (items) =>
+    items
+      .map(
+        (s) => `
+        <li>
+          <div class="card-item services">
+            ${icon(s.icon, "card-item-icon")}
+            <div class="card-data">
+              <h3 class="card-item-title">${escapeHtml(s.title)}</h3>
+              <p class="item-text">${richText(s.text)}</p>
+            </div>
+          </div>
+        </li>`
+      )
+      .join(""),
+
+  testimonials: (items) =>
+    items
+      .map(
+        (t, i) => `
+        <li class="testimonial-list-itme">
+          <div class="card-item team" tabindex="0" role="button" aria-haspopup="dialog" data-index="${i}">
+            <div class="team-info min-test">
+              <div class="photo">
+                <img loading="lazy" decoding="async" src="${t.avatar}" alt="${escapeHtml(t.name)}'s avatar" />
+              </div>
+              <h3 class="card-item-title">${escapeHtml(t.name)}</h3>
+            </div>
+            <p class="item-text">${escapeHtml(t.text)}</p>
+          </div>
+        </li>`
+      )
+      .join(""),
+
+  resume: (sections) =>
+    sections
+      .map(
+        (section) => `
+        <div class="resume-section-name">
+          <div class="resume-section-icon item-icon">${icon(section.icon)}</div>
+          <h3 class="resume-section-title">${escapeHtml(section.title)}</h3>
+        </div>
+        <ol class="resume-section-list">
+          ${section.items.map(resumeItem).join("")}
+        </ol>`
+      )
+      .join("") +
+    `
+        <h2 class="section-title">My Skills</h2>
+        <div class="skills-box">
+          <ul class="skills-list">
+            ${SITE_DATA.skills
+              .map((s) => `<li class="skills-item defult-panel"><span class="hash-tag">#</span> ${escapeHtml(s)}</li>`)
+              .join("")}
+          </ul>
+        </div>`,
+
+  categories: (names) =>
+    ["All", ...names]
+      .map(
+        (name, i) =>
+          `<li><button type="button" class="category-li-btn${i === 0 ? " active" : ""}" data-category="${escapeHtml(name)}">${escapeHtml(name)}</button></li>`
+      )
+      .join(""),
+
+  projects: (items) =>
+    items
+      .map(
+        (p) => `
+        <li class="port-list-li" data-category="${escapeHtml(p.category)}" data-tags="${escapeHtml((p.tags || []).join("|"))}">
+          <a target="_blank" rel="noopener noreferrer" href="${p.url}">
+            <div class="card-item-portfolio active">
+              <div class="card-port-f-bunner">
+                <div class="bunner-preview">${icon("eye", "eye-icon")}</div>
+                <img loading="lazy" decoding="async" class="bunner-img" src="${p.image}" alt="${escapeHtml(p.alt)}" />
+              </div>
+              <p class="card-item-port-text">${escapeHtml(p.category)}</p>
+              <h3 class="card-item-port-title">${escapeHtml(p.title)}</h3>
+              <p class="card-item-port-description">${escapeHtml(p.description)}</p>
+            </div>
+          </a>
+        </li>`
+      )
+      .join(""),
+
+  publications: (items) =>
+    items
+      .map(
+        (b) => `
+        <li>
+          <a target="_blank" rel="noopener noreferrer" href="${b.url}">
+            <div class="card-item-blog">
+              <div class="blog-banner">
+                <img loading="lazy" decoding="async" src="${b.image}" alt="${escapeHtml(b.alt)}" class="blog-img" />
+              </div>
+              <div class="card-blog-details">
+                <span class="card-blog-category-and-date">
+                  <p class="card-blog-category">${escapeHtml(b.category)}</p>
+                  <span class="dot">.</span>
+                  <p class="blog date">${escapeHtml(b.date)}</p>
+                </span>
+                <h3 class="card-blog-big-title">${escapeHtml(b.title)}</h3>
+                <p class="card-blog-text">${escapeHtml(b.text)}</p>
+              </div>
+            </div>
+          </a>
+        </li>`
+      )
+      .join(""),
+};
+
+function resumeItem(item) {
+  // A year range that groups the entries below it (Volunteer Work)
+  if (item.group) {
+    return `<li class="resume-list-item no-dot"><span class="volunteer-date">${escapeHtml(item.group)}</span></li>`;
+  }
+
+  const orgs = (item.at || [])
+    .map((org) =>
+      org.url
+        ? externalLink(org.url, escapeHtml(org.name))
+        : `<a class="companeis-link no-link">${escapeHtml(org.name)}</a>`
+    )
+    .join(' <span class="add-sign">&amp;</span> ');
+  const title = richText(item.role) + (orgs ? ` <span class="add-sign">@</span> ${orgs}` : "");
+  const when = item.date
+    ? `${escapeHtml(item.date)} <span class="forward-selash">//</span> ${escapeHtml(item.place || "")}`
+    : escapeHtml(item.place || "");
+
+  return `
+    <li class="resume-list-item">
+      <h4 class="resume-list-item-title">${title}</h4>
+      <p class="resume-section-date">${when}</p>
+      ${item.about ? `<p class="resume-about-organization">${richText(item.about)}</p>` : ""}
+      ${
+        item.points
+          ? `<ul class="resume-responsibilities-list">${item.points
+              .map((p) => `<li class="responsibility-list-item">${richText(p)}</li>`)
+              .join("")}</ul>`
+          : ""
+      }
+    </li>`;
+}
+
+document.querySelectorAll("[data-render]").forEach((el) => {
+  const key = el.dataset.render;
+  el.innerHTML = render[key](SITE_DATA[key]);
+});
+
+// ---------------------------------------------------------------------------
+// Page behavior
+// ---------------------------------------------------------------------------
+
 // Get references to elements
 const showContactsBtn = document.getElementById("show-contacts");
 const leftSide = document.getElementById("left-side");
@@ -65,30 +247,15 @@ testimonialsItem.forEach(function (item) {
   });
 });
 
-// Function to update dialog content
+// Fill the dialog with the testimonial behind the clicked card
 function updateDialog(item) {
-  const imageSrc = item.querySelector(".photo img").src;
-  const cardItemTitle = item.querySelector(".card-item-title").textContent;
-  const cardItemPosition = item.querySelector(
-    ".card-item-position"
-  ).textContent;
-  const itemText = item.querySelector(".item-text").textContent;
-  const itemDate = item.querySelector(".item-test-mo-date").textContent;
+  const t = SITE_DATA.testimonials[item.dataset.index];
 
-  // Set values in the dialog
-  const dialogPersonImg = document.querySelector(".dialog-person-img");
-  const dialogPersonName = document.querySelector(".dialog-person-name");
-  const dialogPersonPosition = document.querySelector(
-    ".dialog-person-position"
-  );
-  const dialogText = document.querySelector(".dialog-text");
-  const dialogDate = document.querySelector(".dialog-date");
-
-  dialogPersonImg.src = imageSrc;
-  dialogPersonName.textContent = cardItemTitle;
-  dialogPersonPosition.textContent = cardItemPosition;
-  dialogText.textContent = itemText;
-  dialogDate.textContent = itemDate;
+  document.querySelector(".dialog-person-img").src = t.avatar;
+  document.querySelector(".dialog-person-name").textContent = t.name;
+  document.querySelector(".dialog-person-position").textContent = t.position;
+  document.querySelector(".dialog-text").textContent = t.text;
+  document.querySelector(".dialog-date").textContent = t.date;
 }
 
 // Sections are linked by hash (#about, #resume, ...) so each tab has its own URL
@@ -144,23 +311,16 @@ document.addEventListener("DOMContentLoaded", function () {
       button.classList.add("active");
 
       // Get the category name of the clicked button
-      const categoryName = button.textContent.trim();
+      const categoryName = button.dataset.category;
 
-      // Show/hide project items based on the category
+      // Show a project if its category or one of its tags matches
       projectItems.forEach((item) => {
-        const subCategory = item
-          .querySelector(".sub-category")
-          .textContent.trim();
-        const itemCategory = item
-          .querySelector(".card-item-port-text")
-          .textContent.trim();
-        const isAllCategory = categoryName === "All";
+        const tags = item.dataset.tags.split("|");
 
         if (
-          isAllCategory ||
-          itemCategory === categoryName ||
-          (categoryName === "Open Source Project" &&
-            subCategory === "Open Source Project")
+          categoryName === "All" ||
+          item.dataset.category === categoryName ||
+          tags.includes(categoryName)
         ) {
           item.style.display = "block";
         } else {

@@ -51,7 +51,7 @@ Plain **HTML5, CSS and JavaScript**: no framework and no build step.
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-<a href="https://sameermuslim.github.io/my-portfolio/">https://sameermuslim.github.io/my-portfolio/</a>
+<a href="https://sameermuslim-aseel.github.io/my-portfolio/">https://sameermuslim-aseel.github.io/my-portfolio/</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -85,15 +85,47 @@ Push to `main` and enable **GitHub Pages** (Settings → Pages → deploy from b
 ## 🗂 Project Structure <a name="project-structure"></a>
 
 ```
-index.html            All page content and sections
-index.js              Tabs, theme toggle, testimonial popup, portfolio filter, contact form
+data.js               ★ All the content: services, testimonials, resume, skills, projects, publications
+index.html            Page layout, sidebar, contact form and the shared icon sprite
+index.js              Builds the sections from data.js; tabs, theme toggle, popup, filter, contact form
 css/style.css         Styles and responsive breakpoints
 images/               Avatars, icons and the link-preview image (og-image.png)
 images/banners/       Project and publication cover images (WebP)
 assets/               Resume PDF
 ```
 
-**Adding a project:** copy one `<li class="port-list-li">` block in the Portfolio section of `index.html`, then change the link, banner image, category and description. Banners display at roughly 4:3; WebP keeps them small.
+### ✏️ Updating content
+
+Everything you'd normally change lives in **`data.js`**, so you don't need to touch the HTML. Copy an existing entry, edit it, save.
+
+**Add a project** to `projects` (newest first):
+
+```js
+{
+  title: "My New App",
+  category: "Application",          // one of `categories`, used by the filter
+  tags: ["Open Source Project"],    // extra filters it should appear under
+  url: "https://github.com/...",
+  image: "images/banners/my-new-app.webp",
+  alt: "My New App banner",
+  description: "One or two sentences about the project."
+},
+```
+
+**Add a job** to the `Experience` section of `resume`:
+
+```js
+{
+  role: "Senior Product Designer",
+  at: [{ name: "Company", url: "https://company.com" }],   // leave out url if there's no link
+  date: "Jan 2027 – present",
+  place: "Remote",
+  about: "What the company does.",
+  points: ["What you did.", "Another achievement with a [link](https://example.com)."]
+},
+```
+
+Any text can contain a link written as `[link text](https://...)`. Banners display at roughly 4:3; WebP keeps them small.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -113,7 +145,6 @@ assets/               Resume PDF
 ## 🔭 Future Features <a name="future-features"></a>
 
 - [ ] Case-study pages for selected projects
-- [ ] Move projects and resume data into a JSON file
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
