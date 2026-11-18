@@ -48,8 +48,8 @@
 html[data-theme="dark"] {
   --paper: #0d1015;
   --paper-2: #151922;
-  --canvas: #12151c;
-  --dot: #262b36;
+  --canvas: #090b0f;
+  --dot: #232833;
   --ink: #eef0f5;
   --text: #a7aebb;
   --muted: #7b828f;
@@ -62,6 +62,11 @@ html[data-theme="dark"] {
   --hatch-1: #2a3142;
   --hatch-2: #1f2534;
   color-scheme: dark;
+}
+/* design-file frames sit above the darker canvas, like artboards in Figma */
+html[data-theme="dark"] .frame {
+  background: #1c212b;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 24px 60px rgba(0, 0, 0, 0.55);
 }
 html[data-theme="dark"] .hero-portrait {
   background: #c99a1c;
