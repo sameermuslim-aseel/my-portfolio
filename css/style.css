@@ -498,6 +498,24 @@ hr {
   font-size: 12px;
   letter-spacing: -0.02em;
 }
+/* Compact icon boxes in the sidebar contact list (other .item-icon uses keep their size) */
+.contact-item .item-icon,
+.contact-item .item-icon::before {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+.contact-item .item-icon {
+  padding: 10px;
+}
+.contact-item .item-icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+.contact-item .item-data {
+  padding: 2px 0 0;
+}
 address {
   font-style: normal;
 }
