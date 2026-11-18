@@ -27,6 +27,12 @@
   --sticky-g: #c7f0d8;
   --sticky-p: #ffd6e8;
   --sticky-b: #d4e4ff;
+  --surface: #ffffff; /* cards, frames, panels */
+  --night: #0e1116; /* sections that are always dark (contact) */
+  --grid: #e6ecf5; /* graph paper behind sketches */
+  --hatch-1: #cfd4dc;
+  --hatch-2: #e1e5eb;
+  color-scheme: light;
 
   --f-display: "Fraunces", Georgia, serif;
   --f-ui: "Inter Tight", system-ui, sans-serif;
@@ -36,6 +42,32 @@
   --gutter: clamp(20px, 5vw, 64px);
   --radius: 22px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Dark theme: "blueprint" night mode, set by the toggle or the system setting */
+html[data-theme="dark"] {
+  --paper: #0d1015;
+  --paper-2: #151922;
+  --canvas: #12151c;
+  --dot: #262b36;
+  --ink: #eef0f5;
+  --text: #a7aebb;
+  --muted: #7b828f;
+  --line: #232833;
+  --accent: #7d93ff;
+  --accent-ink: #9aabff;
+  --surface: #171b23;
+  --night: #07090d;
+  --grid: #1a2030;
+  --hatch-1: #2a3142;
+  --hatch-2: #1f2534;
+  color-scheme: dark;
+}
+html[data-theme="dark"] .hero-portrait {
+  background: #c99a1c;
+}
+html[data-theme="dark"] img {
+  filter: brightness(0.92);
 }
 
 *,
@@ -97,7 +129,7 @@ textarea {
   top: -60px;
   z-index: 200;
   background: var(--ink);
-  color: #fff;
+  color: var(--paper);
   padding: 10px 14px;
   border-radius: 8px;
 }
@@ -165,7 +197,7 @@ textarea {
 }
 .btn-line:hover {
   background: var(--ink);
-  color: #fff;
+  color: var(--paper);
 }
 
 /* =========================================================================
@@ -180,11 +212,11 @@ textarea {
   width: min(1180px, calc(100% - 28px));
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: flex-start;
+  gap: 12px;
   padding: 10px 10px 10px 22px;
   border-radius: 999px;
-  background: rgba(251, 250, 246, 0.78);
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(14, 17, 22, 0.08);
@@ -210,6 +242,7 @@ textarea {
 }
 .nav-links {
   display: flex;
+  margin-inline: auto;
   gap: 30px;
   font-size: 15px;
   font-weight: 500;
@@ -235,7 +268,7 @@ textarea {
 }
 .nav-cta {
   background: var(--ink);
-  color: #fff;
+  color: var(--paper);
   padding: 11px 20px;
   border-radius: 999px;
   font-weight: 600;
@@ -245,6 +278,44 @@ textarea {
   background: #fff;
   color: var(--ink);
 }
+/* theme toggle: sun in light mode, moon in dark */
+.theme-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--paper-2);
+  cursor: pointer;
+  transition: transform 0.4s var(--ease);
+}
+.theme-btn:hover {
+  transform: rotate(-15deg);
+}
+.nav.dark .theme-btn {
+  background: rgba(255, 255, 255, 0.12);
+}
+.theme-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.theme-btn .i-moon {
+  display: none;
+  fill: currentColor;
+  stroke: none;
+}
+html[data-theme="dark"] .theme-btn .i-sun {
+  display: none;
+}
+html[data-theme="dark"] .theme-btn .i-moon {
+  display: block;
+}
+
 /* hamburger, phones only: two lines that turn into an × */
 .nav-menu {
   display: none;
@@ -366,7 +437,7 @@ textarea {
   align-items: center;
   gap: 8px;
   background: var(--ink);
-  color: #fff;
+  color: var(--paper);
   font: 12px var(--f-mono);
   padding: 8px 13px;
   border-radius: 999px;
@@ -406,7 +477,7 @@ textarea {
   position: absolute;
   left: 12px;
   bottom: 12px;
-  background: rgba(255, 255, 255, 0.94);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
   padding: 6px 12px;
   border-radius: 999px;
   font-weight: 600;
@@ -417,7 +488,7 @@ textarea {
 .wire {
   display: none;
   background-color: var(--paper);
-  background-image: linear-gradient(#e6ecf5 1px, transparent 1px), linear-gradient(90deg, #e6ecf5 1px, transparent 1px);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 28px 28px;
   font-family: var(--f-hand);
   color: #4b5563;
@@ -430,7 +501,7 @@ textarea {
   height: 18px;
   margin-bottom: 18px;
   border-radius: 6px;
-  background: repeating-linear-gradient(-45deg, #cfd4dc 0 6px, #e1e5eb 6px 12px);
+  background: repeating-linear-gradient(-45deg, var(--hatch-1) 0 6px, var(--hatch-2) 6px 12px);
 }
 .bar.tall {
   height: min(70px, 7.6vh);
@@ -484,7 +555,7 @@ textarea {
   color: #2b6cff;
 }
 .note.ink {
-  color: #4b5563;
+  color: var(--muted);
 }
 .n1 {
   left: 62%;
@@ -585,7 +656,7 @@ textarea {
 }
 .scanner .tag.r {
   left: 14px;
-  background: #fff;
+  background: var(--surface);
   color: #4b5563;
   border: 1px solid #dfe3ea;
 }
@@ -611,7 +682,7 @@ textarea {
 .rail li i {
   display: block;
   height: 3px;
-  background: #e3e6ec;
+  background: var(--line);
   border-radius: 3px;
   margin-bottom: 10px;
   overflow: hidden;
@@ -637,7 +708,7 @@ textarea {
   font-size: 34px;
   font-weight: 700;
   color: var(--accent);
-  background: rgba(251, 250, 246, 0.92);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
   padding: 8px 22px;
   border-radius: 14px;
   animation: nudge 2s ease-in-out infinite;
@@ -690,7 +761,7 @@ textarea {
 /* a frame = one case study */
 .frame {
   position: relative;
-  background: #fff;
+  background: var(--surface);
   border-radius: 6px;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04), 0 18px 50px rgba(0, 0, 0, 0.07);
   margin-top: 30px;
@@ -798,6 +869,7 @@ textarea {
   line-height: 1.4;
   box-shadow: 0 10px 20px -6px rgba(0, 0, 0, 0.12);
   background: var(--sticky-y);
+  color: #1d1f24; /* sticky notes are paper in both themes */
 }
 .sticky b {
   display: block;
@@ -916,7 +988,7 @@ textarea {
 .motion .canvas-layers,
 .motion .canvas-inspector {
   display: block;
-  background: #fff;
+  background: var(--surface);
   font-size: 13px;
   padding: 16px 0;
   z-index: 2;
@@ -943,7 +1015,7 @@ textarea {
   display: flex;
   gap: 8px;
   padding: 7px 16px;
-  color: #3b3b3b;
+  color: var(--text);
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
@@ -953,10 +1025,10 @@ textarea {
   width: 12px;
 }
 .layer:hover {
-  background: #f5f5f4;
+  background: var(--paper-2);
 }
 .layer.on {
-  background: #e5f4ff;
+  background: color-mix(in srgb, var(--select) 14%, transparent);
   color: var(--select);
 }
 .layer.on i {
@@ -977,7 +1049,7 @@ textarea {
   grid-template-columns: 84px 1fr;
   gap: 6px;
   padding: 7px 0;
-  border-bottom: 1px solid #f2f2f0;
+  border-bottom: 1px solid var(--line);
 }
 .prop span:first-child {
   color: var(--muted);
@@ -1032,7 +1104,7 @@ textarea {
   position: absolute;
   right: 14px;
   bottom: 14px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 5px 9px;
@@ -1249,7 +1321,7 @@ textarea {
   gap: 10px;
   padding: 10px 18px;
   border-radius: 999px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   font-weight: 600;
   white-space: nowrap;
@@ -1337,7 +1409,7 @@ textarea {
 }
 .pub-card {
   display: block;
-  background: #fff;
+  background: var(--surface);
   padding: 12px;
   box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.2);
   transition: transform 0.5s var(--ease), box-shadow 0.5s;
@@ -1410,7 +1482,7 @@ textarea {
   border-radius: 50% 50% 50% 6px;
   overflow: hidden;
   background: var(--sticky-b);
-  box-shadow: 0 0 0 3px #fff, 0 8px 20px -6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 3px var(--surface), 0 8px 20px -6px rgba(0, 0, 0, 0.3);
 }
 .comment-pin img {
   width: 100%;
@@ -1418,7 +1490,7 @@ textarea {
   object-fit: cover;
 }
 .comment-body {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 4px 18px 18px 18px;
   padding: 20px 22px;
@@ -1460,7 +1532,7 @@ textarea {
    CONTACT (dark final frame)
    ========================================================================= */
 .contact {
-  background: var(--ink);
+  background: var(--night);
   color: #fff;
   background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1.2px, transparent 1.2px);
   background-size: 24px 24px;
@@ -1591,7 +1663,7 @@ textarea {
   align-items: flex-start;
   gap: 14px;
   padding: 16px 44px 18px 18px;
-  background: #fff;
+  background: var(--surface);
   color: var(--ink);
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -1770,7 +1842,7 @@ textarea {
     border-radius: 26px;
     gap: 10px;
   }
-  .nav-cta {
+  .theme-btn {
     margin-left: auto;
   }
   .nav-links {
@@ -1993,7 +2065,7 @@ textarea {
   margin-top: 26px;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: #fff;
+  background: var(--surface);
   overflow: hidden;
 }
 .case-facts div {
@@ -2078,7 +2150,7 @@ textarea {
   padding: 26px 24px 28px;
   border: 2px dashed #b9bfc9;
   border-radius: 8px 14px 10px 16px / 14px 8px 16px 10px;
-  background: #fff;
+  background: var(--surface);
   transition: border-color 0.3s, transform 0.4s var(--ease);
 }
 .case-step:hover {
@@ -2118,7 +2190,7 @@ textarea {
   position: relative;
   padding: 18px 20px 18px 58px;
   border-radius: 14px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   font-size: 18px;
   font-weight: 500;
@@ -2144,7 +2216,7 @@ textarea {
   gap: 10px;
   margin-top: clamp(90px, 12vw, 150px);
   padding: clamp(60px, 8vw, 110px) var(--gutter);
-  background: var(--ink);
+  background: var(--night);
   color: #fff;
   overflow: hidden;
 }
@@ -2227,7 +2299,7 @@ textarea {
   align-content: start;
   gap: 10px;
   padding: 24px 20px 22px;
-  background: #fff;
+  background: var(--surface);
   border: 2px solid var(--ink);
   border-radius: 8px 14px 10px 16px / 14px 8px 16px 10px;
   transition: border-color 0.6s, background 0.6s, box-shadow 0.6s;
@@ -2300,7 +2372,7 @@ textarea {
   max-width: 360px;
   padding: 18px 20px 20px;
   border-radius: 16px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   box-shadow: 0 14px 30px -20px rgba(0, 0, 0, 0.3);
 }
@@ -2354,7 +2426,7 @@ textarea {
 }
 .wireframe body {
   background-color: var(--paper);
-  background-image: linear-gradient(#e6ecf5 1px, transparent 1px), linear-gradient(90deg, #e6ecf5 1px, transparent 1px);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 .wireframe body *:not(svg):not(path):not(use) {
@@ -2367,7 +2439,7 @@ textarea {
   font-family: var(--f-hand) !important;
 }
 .wireframe .wire .bar {
-  background-image: repeating-linear-gradient(-45deg, #cfd4dc 0 6px, #e1e5eb 6px 12px) !important;
+  background-image: repeating-linear-gradient(-45deg, var(--hatch-1) 0 6px, var(--hatch-2) 6px 12px) !important;
 }
 .wireframe img {
   visibility: hidden !important;

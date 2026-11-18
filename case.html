@@ -12,7 +12,15 @@
     <meta property="og:image" content="https://sameermuslim-aseel.github.io/my-portfolio/images/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- apply the saved theme, or the system one, before the page paints -->
+    <script>
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Gaegu:wght@400;700&display=swap"
@@ -30,7 +38,10 @@
         <a href="index.html#writing">Writing</a>
         <a href="index.html#contact">Contact</a>
       </nav>
-      <a class="nav-cta" href="index.html#contact">Let's talk</a>
+      <button type="button" class="theme-btn" id="theme-btn" aria-label="Dark mode" aria-pressed="false">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" /></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" /></svg>
+      </button>      <a class="nav-cta" href="index.html#contact">Let's talk</a>
       <button type="button" class="nav-menu" id="nav-menu" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
         <span></span><span></span>
       </button>
@@ -40,5 +51,6 @@
 
     <script src="data.js"></script>
     <script src="js/case.js"></script>
+    <script src="js/theme.js"></script>
   </body>
 </html>

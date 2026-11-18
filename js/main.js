@@ -186,6 +186,12 @@ $$(".section-head > *, .archive-head > *, .kind-head > *, .exp-side > *, .contac
    ========================================================================= */
 
 const root = document.documentElement;
+
+// Pinned scroll scenes measure the page on load, so a reload starts at the top
+// (or at the #section in the URL) instead of restoring a half-scrolled position.
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+if (!location.hash) window.scrollTo(0, 0);
+
 const hasMotionLibs = window.gsap && window.ScrollTrigger && window.Lenis;
 let lenis = null;
 
