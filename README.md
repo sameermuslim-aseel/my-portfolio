@@ -148,12 +148,14 @@ Everything you'd normally change lives in **`data.js`**, so you don't need to to
 
 The **How I work** steps live in `process` and the **Now** card in `now`. Update `now.updated` when you change it.
 
-**Add a project** to the archive in `projects` (newest first):
+**Add a project** to the archive in `projects` (newest first). Older work shows as a compact "version history" list with a preview on hover; the first five rows show, the rest sit behind "+ more":
 
 ```js
 {
   title: "My New App",
-  category: "Application",          // shown as the label above the card
+  short: "One line for the version-history row",
+  kind: "Android",                  // the Type column
+  category: "Application",
   tags: ["Open Source Project"],
   url: "https://github.com/...",
   image: "images/banners/my-new-app.webp",
