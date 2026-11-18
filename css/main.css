@@ -2210,3 +2210,277 @@ textarea {
     opacity: 0.25;
   }
 }
+/* =========================================================================
+   HOW I WORK
+   ========================================================================= */
+.process {
+  padding-bottom: 20px;
+}
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 22px;
+}
+.process-step {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 24px 20px 22px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 8px 14px 10px 16px / 14px 8px 16px 10px;
+  transition: border-color 0.6s, background 0.6s, box-shadow 0.6s;
+  box-shadow: 4px 5px 0 var(--ink);
+}
+/* in motion, steps start as a pencil sketch and "ink in" on scroll */
+.motion .process-step:not(.inked) {
+  border-style: dashed;
+  border-color: #b9bfc9;
+  background: transparent;
+  box-shadow: none;
+}
+.motion .process-step:not(.inked) .step-tools li {
+  background: transparent;
+  border-style: dashed;
+}
+.process-step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -20px;
+  top: 22px;
+  z-index: 1;
+  font-family: var(--f-hand);
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--accent);
+}
+.process-step .step-n {
+  font: 500 13px var(--f-mono);
+  color: var(--accent);
+}
+.process-step h3 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.process-step > p {
+  color: var(--text);
+  font-size: 15px;
+}
+.step-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.step-tools li {
+  font: 500 11.5px var(--f-mono);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+  transition: background 0.6s;
+}
+.step-example {
+  font-family: var(--f-hand);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.1;
+  color: var(--red);
+  transform: rotate(-1.5deg);
+  margin-top: 6px;
+}
+
+/* =========================================================================
+   NOW CARD
+   ========================================================================= */
+.now {
+  width: 100%;
+  max-width: 360px;
+  padding: 18px 20px 20px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 30px -20px rgba(0, 0, 0, 0.3);
+}
+.now-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 12px var(--f-mono);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.now-head i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+.now-head span {
+  color: var(--muted);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.now li {
+  margin-top: 10px;
+  font-size: 15.5px;
+  color: var(--text);
+}
+.now li b {
+  color: var(--ink);
+}
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 5px rgba(10, 207, 131, 0.2);
+  }
+}
+
+/* =========================================================================
+   WIREFRAME MODE (press W)
+   ========================================================================= */
+.wire-toggle {
+  background: none;
+  border: 0;
+  color: #8ea2ff;
+  font-size: 22px;
+  cursor: pointer;
+}
+.wire-toggle small {
+  font: 11px var(--f-mono);
+  opacity: 0.7;
+}
+.wireframe body {
+  background-color: var(--paper);
+  background-image: linear-gradient(#e6ecf5 1px, transparent 1px), linear-gradient(90deg, #e6ecf5 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.wireframe body *:not(svg):not(path):not(use) {
+  color: #5b6270 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-color: #9aa1ad !important;
+  font-family: var(--f-hand) !important;
+}
+.wireframe .wire .bar {
+  background-image: repeating-linear-gradient(-45deg, #cfd4dc 0 6px, #e1e5eb 6px 12px) !important;
+}
+.wireframe img {
+  visibility: hidden !important;
+}
+.wireframe :is(.btn, .nav, .nav-cta, .chip, .sticky, .frame, .comment-body, .contact-form, .process-step, .case-step, .case-facts, .toast, .now) {
+  outline: 2px dashed #9aa1ad !important;
+  outline-offset: 0;
+}
+/* image slots become classic "X" placeholders */
+.wireframe :is(.hero-portrait, .hero-card, .shot, .arch-img, .pub-card, .case-cover, .comment-pin, .case-next) {
+  outline: 2px solid #9aa1ad !important;
+  background-image: linear-gradient(to top right, transparent calc(50% - 1px), #b3b9c3 calc(50% - 1px), #b3b9c3 calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(to bottom right, transparent calc(50% - 1px), #b3b9c3 calc(50% - 1px), #b3b9c3 calc(50% + 1px), transparent calc(50% + 1px)) !important;
+}
+
+@media (max-width: 1100px) {
+  .process-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .process-step:nth-child(3)::after {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .process-steps {
+    grid-template-columns: 1fr;
+  }
+  .process-step::after {
+    display: none;
+  }
+}
+/* before/after slider (case pages, only when data.js has `compare`) */
+.compare-box {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.35);
+  user-select: none;
+}
+.compare-box img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.compare-before {
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+.compare-box::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+.compare-handle {
+  position: absolute;
+  top: 50%;
+  left: var(--pos);
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #fff;
+  font-size: 18px;
+  box-shadow: 0 8px 22px rgba(43, 78, 255, 0.45);
+  pointer-events: none;
+}
+.compare-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 3;
+  margin: 0;
+}
+.compare-range:focus-visible + .compare-handle,
+.compare-box:focus-within .compare-handle {
+  outline: 3px solid var(--select);
+  outline-offset: 3px;
+}
+.compare-tag {
+  position: absolute;
+  top: 16px;
+  z-index: 1;
+  font: 500 12px var(--f-mono);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(14, 17, 22, 0.75);
+  color: #fff;
+}
+.compare-tag.before {
+  left: 16px;
+}
+.compare-tag.after {
+  right: 16px;
+}
+.compare figcaption {
+  margin-top: 14px;
+  font: 13px var(--f-mono);
+  color: var(--muted);
+}

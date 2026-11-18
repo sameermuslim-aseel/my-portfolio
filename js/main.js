@@ -102,6 +102,25 @@ const orgs = (item) =>
     .map((o) => (o.url ? link(o.url, escapeHtml(o.name)) : escapeHtml(o.name)))
     .join(" &amp; ");
 
+// How I work
+$("#process-steps").innerHTML = DATA.process
+  .map(
+    (s, i) => `
+  <li class="process-step" data-reveal>
+    <span class="step-n">${pad(i + 1)}</span>
+    <h3>${escapeHtml(s.title)}</h3>
+    <p>${richText(s.text)}</p>
+    <ul class="step-tools">${s.tools.map((t) => `<li>${escapeHtml(t)}</li>`).join("")}</ul>
+    <p class="step-example">e.g. ${escapeHtml(s.example)}</p>
+  </li>`
+  )
+  .join("");
+
+// Now card
+$("#now").innerHTML = `
+  <p class="now-head"><i></i>Now <span>· updated ${escapeHtml(DATA.now.updated)}</span></p>
+  <ul>${DATA.now.items.map((n) => `<li><b>${escapeHtml(n.label)}</b> ${richText(n.text)}</li>`).join("")}</ul>`;
+
 $("#exp-list").innerHTML = resume.Experience.map(
   (item) => `
   <li class="exp-item" data-reveal>
@@ -187,6 +206,24 @@ menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("open"))
 document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
 document.addEventListener("click", (e) => !nav.contains(e.target) && setMenu(false));
 
+// Wireframe mode: press W (or click the footer note) to see the site as a sketch again
+let wireToast = null;
+function toggleWireframe() {
+  const on = root.classList.toggle("wireframe");
+  if (wireToast) wireToast.close();
+  wireToast = showToast({
+    type: "success",
+    title: on ? "Wireframe mode ✎" : "Back to hi-fi",
+    message: on ? "This is how every page starts. Press W again to switch back." : "Press W any time to see the sketch.",
+    duration: 3500,
+  });
+}
+$("#wire-toggle").addEventListener("click", toggleWireframe);
+document.addEventListener("keydown", (e) => {
+  const typing = /input|textarea|select/i.test(e.target.tagName) || e.target.isContentEditable;
+  if (!typing && !e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase() === "w") toggleWireframe();
+});
+
 // in-page links
 $$('a[href^="#"]').forEach((a) =>
   a.addEventListener("click", (e) => {
@@ -212,7 +249,7 @@ if (hasMotionLibs) {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
-    const cleanups = [setupHero(), setupCanvas(), setupBoard(), setupReveals()];
+    const cleanups = [setupHero(), setupCanvas(), setupBoard(), setupReveals(), setupProcess()];
     ScrollTrigger.refresh();
 
     return () => {
@@ -444,6 +481,17 @@ function setupBoard() {
   };
 }
 
+/* ---------- How I work: each step "inks in" from a dashed sketch ---------- */
+function setupProcess() {
+  const steps = $$(".process-step");
+  const triggers = steps.map((el) =>
+    ScrollTrigger.create({ trigger: el, start: "top 72%", once: true, onEnter: () => el.classList.add("inked") })
+  );
+  return () => {
+    triggers.forEach((t) => t.kill());
+    steps.forEach((el) => el.classList.remove("inked"));
+  };
+}
 /* ---------- Gentle reveals ---------- */
 function setupReveals() {
   const triggers = ScrollTrigger.batch("[data-reveal]", {

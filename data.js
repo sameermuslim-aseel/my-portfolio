@@ -109,6 +109,49 @@ const SITE_DATA = {
     },
   ],
 
+  // "How I work" section, in order
+  process: [
+    {
+      title: "Research",
+      text: "Talk to real people before drawing anything: interviews, surveys and usability tests.",
+      tools: ["User Research", "Surveys", "Personas"],
+      example: "Case studies with key Buy Good sellers & buyers",
+    },
+    {
+      title: "Define",
+      text: "Turn what I learned into journeys, sitemaps and a roadmap the whole team can agree on.",
+      tools: ["Journey Mapping", "Information Architecture", "Roadmapping"],
+      example: "Aseel's product roadmap",
+    },
+    {
+      title: "Sketch",
+      text: "Explore lots of ideas cheaply with rough sketches and wireframes, then keep the best.",
+      tools: ["Wireframing", "Miro", "Figma"],
+      example: "This website started as one",
+    },
+    {
+      title: "Design",
+      text: "High-fidelity UI and interactive prototypes inside a consistent, accessible design system.",
+      tools: ["Figma", "Design Systems", "WCAG"],
+      example: "The Sell Good redesign",
+    },
+    {
+      title: "Test & ship",
+      text: "Test with users, measure, and build it. I write the frontend myself, so designs survive the handoff.",
+      tools: ["A/B Testing", "HTML · CSS · JS", "Analytics"],
+      example: "Tikko, designed and built solo",
+    },
+  ],
+
+  // "Now" card: what I'm focused on (update every month or two)
+  now: {
+    updated: "October 2026",
+    items: [
+      { label: "Designing", text: "the Buy Good marketplace at Aseel" },
+      { label: "Building", text: "Tikko, a family task app in Persian" },
+    ],
+  },
+
   services: [
     {
       icon: "design",

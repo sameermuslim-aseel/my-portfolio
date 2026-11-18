@@ -72,6 +72,24 @@ if (index === -1) {
       </div>
     </section>
 
+    ${
+      c.compare
+        ? `
+    <section class="case-section container" aria-label="Before and after">
+      <figure class="compare">
+        <div class="compare-box" style="--pos: 50%">
+          <img src="${c.compare.after}" alt="After: ${escapeHtml(c.title)} redesign" />
+          <img class="compare-before" src="${c.compare.before}" alt="Before the redesign" />
+          <span class="compare-tag before">Before</span><span class="compare-tag after">After</span>
+          <span class="compare-handle" aria-hidden="true">⇆</span>
+          <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after" />
+        </div>
+        ${c.compare.caption ? `<figcaption>${escapeHtml(c.compare.caption)}</figcaption>` : ""}
+      </figure>
+    </section>`
+        : ""
+    }
+
     <section class="case-section container" aria-labelledby="process">
       <h2 class="case-h" id="process"><span>02</span>How it came together</h2>
       <ol class="case-steps">
@@ -127,3 +145,9 @@ if (index === -1) {
     </a>
   </article>`;
 }
+
+// Before/after slider: the range input moves the divider (keyboard friendly too)
+document.querySelectorAll(".compare-box").forEach((box) => {
+  const range = box.querySelector(".compare-range");
+  range.addEventListener("input", () => box.style.setProperty("--pos", range.value + "%"));
+});
