@@ -58,9 +58,11 @@ $("#world").innerHTML = CASES.map(
         ${link(c.url, `<img src="${c.image}" alt="${escapeHtml(c.title)} preview" loading="lazy" />`, "shot")}
       </div>
       <div class="frame-notes">
-        <div class="sticky"><b>The problem</b>${escapeHtml(c.problem)}</div>
-        <div class="sticky g"><b>My role</b>${escapeHtml(c.myRole)}</div>
-        <div class="sticky p"><b>What shipped</b>${escapeHtml(c.shipped)}</div>
+        <div class="stickies">
+          <div class="sticky"><b>The problem</b>${escapeHtml(c.problem)}</div>
+          <div class="sticky g"><b>My role</b>${escapeHtml(c.myRole)}</div>
+          <div class="sticky p"><b>What shipped</b>${escapeHtml(c.shipped)}</div>
+        </div>
         <p class="frame-note">${escapeHtml(c.note)}</p>
         <div class="frame-meta"><span>${escapeHtml(c.type)}</span>${link(c.url, "Open project ↗", "frame-link")}</div>
       </div>
@@ -173,6 +175,18 @@ function scrollToTarget(target) {
   else (typeof target === "number" ? window.scrollTo({ top: target, behavior: "smooth" }) : target.scrollIntoView({ behavior: "smooth" }));
 }
 
+// mobile menu
+const nav = $("#nav");
+const menuBtn = $("#nav-menu");
+function setMenu(open) {
+  nav.classList.toggle("open", open);
+  menuBtn.setAttribute("aria-expanded", open);
+  menuBtn.setAttribute("aria-label", open ? "Close menu" : "Menu");
+}
+menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
+document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
+document.addEventListener("click", (e) => !nav.contains(e.target) && setMenu(false));
+
 // in-page links
 $$('a[href^="#"]').forEach((a) =>
   a.addEventListener("click", (e) => {
@@ -180,6 +194,7 @@ $$('a[href^="#"]').forEach((a) =>
     const target = id === "#top" ? 0 : $(id);
     if (target === null) return;
     e.preventDefault();
+    setMenu(false);
     scrollToTarget(target);
   })
 );
@@ -209,7 +224,34 @@ if (hasMotionLibs) {
     };
   });
 
+  // Phones and tablets: no pinning, but the sketch still turns into the design once
+  mm.add("(max-width: 900px) and (prefers-reduced-motion: no-preference)", () => setupHeroLite());
+
   setupNav();
+}
+
+/* ---------- Hero on small screens: sketch draws in, then wipes away once ---------- */
+function setupHeroLite() {
+  // only worth it if the visitor is at the top of the page
+  if (scrollY > 200) return;
+  root.classList.add("motion-lite");
+  const wire = $(".wire");
+  const scanner = $("#scanner");
+
+  const tl = gsap.timeline({ delay: 0.15, onComplete: () => root.classList.remove("motion-lite") });
+  tl.from(".wire .bar", { scaleX: 0, transformOrigin: "left", duration: 0.6, stagger: 0.05, ease: "power3.out" })
+    .from(".wire .sk", { opacity: 0, scale: 0.96, duration: 0.5, stagger: 0.04 }, 0.1)
+    .from(".wire .note", { opacity: 0, y: 10, rotate: -6, duration: 0.45, stagger: 0.1, ease: "back.out(2)" }, 0.4)
+    .set(scanner, { opacity: 1 }, "+=0.5")
+    .fromTo(wire, { clipPath: "inset(0 0 0 0%)" }, { clipPath: "inset(0 0 0 100%)", duration: 1.5, ease: "power2.inOut" })
+    .fromTo(scanner, { x: 0 }, { x: () => innerWidth, duration: 1.5, ease: "power2.inOut" }, "<")
+    .set(scanner, { opacity: 0 });
+
+  return () => {
+    tl.kill();
+    root.classList.remove("motion-lite");
+    gsap.set([wire, scanner], { clearProps: "all" });
+  };
 }
 
 /* ---------- Hero: the wireframe gets designed as you scroll ---------- */
@@ -417,14 +459,13 @@ function setupReveals() {
 
 /* ---------- Nav: hides while reading, darkens over the contact frame ---------- */
 function setupNav() {
-  const nav = $("#nav");
   let last = 0;
   ScrollTrigger.create({
     start: 0,
     end: "max",
     onUpdate: (self) => {
       const y = self.scroll();
-      nav.classList.toggle("hidden", y > 200 && y > last);
+      nav.classList.toggle("hidden", y > 200 && y > last && !nav.classList.contains("open"));
       last = y;
     },
   });
