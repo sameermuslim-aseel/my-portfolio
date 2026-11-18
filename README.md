@@ -36,14 +36,23 @@ Plain **HTML5, CSS and JavaScript**: no framework and no build step. Libraries l
 
 - [GSAP](https://gsap.com) + ScrollTrigger for scroll-driven animation
 - [Lenis](https://lenis.darkroom.engineering) for smooth scrolling
-- [Web3Forms](https://web3forms.com) for the contact form
-- Google Fonts: Fraunces, Inter Tight, JetBrains Mono, Gaegu
+- [Web3Forms](https://web3forms.com) for the contact form and visitor comments
+- [GoatCounter](https://www.goatcounter.com) for privacy-friendly analytics (optional, off by default)
+- Google Fonts: Fraunces, Inter Tight, JetBrains Mono, Gaegu, and Vazirmatn for Persian
 
 ## ✨ Features <a name="features"></a>
 
 - **Sketch → Ship hero**: the page starts as a hand-drawn wireframe; scrolling "designs" it into the final layout
 - **Work as a design file**: case studies are frames on a canvas, with a layers panel, inspector, sticky notes and a camera that flies between them
-- **Writing board and kind words**: magazine issues pinned to a board, testimonials as design comments
+- **Case-study pages**: every featured project opens a full write-up (`case.html?p=slug`) with the brief, process, design decisions, outcome and an optional before/after slider
+- **How I work**: five process steps that "ink in" from a dashed sketch as you scroll, plus a **Now** card
+- **Writing board and kind words**: magazine issues pinned to a board, testimonials as design comments, and visitors can leave their own comment (sent to my inbox for review)
+- **Dark mode**: follows the system setting, with a toggle that remembers your choice
+- **فارسی**: a full Persian version, right to left, from the فا button or `?lang=fa`
+- **Wireframe mode**: press <kbd>W</kbd> (or the footer link) to see the whole site as a sketch
+- **Design system page** (`styleguide.html`) built from the live tokens and components
+- **Printable résumé** (`resume.html`): one A4 page generated from the same data
+- **Installable and offline**: a web app manifest and a service worker
 - **Works without motion**: on phones, with reduced motion, or if the CDN fails, the same content shows as a clean static page
 - **SEO-ready**: meta description, Open Graph / Twitter preview card, `Person` structured data
 - **Accessible**: semantic sections, keyboard focus styles, decorative layers hidden from screen readers
@@ -87,9 +96,19 @@ Push to `main` and enable **GitHub Pages** (Settings → Pages → deploy from b
 
 ```
 data.js               ★ All the content: case studies, projects, resume, skills, publications, testimonials
-index.html            Page structure (hero wireframe, sections, contact form)
-js/main.js            Renders data.js, runs the scroll animations, contact form + toasts
-css/main.css          Design tokens, layout, static + motion styles
+data.fa.js            Persian text: interface strings plus translated case studies, process and Now card
+index.html            Home page structure (hero wireframe, sections, contact form)
+case.html             Case-study page, filled from caseStudies by js/case.js
+styleguide.html       Design-system page (js/styleguide.js)
+resume.html           One-page printable résumé (js/resume.js)
+js/main.js            Renders data.js, runs the scroll animations, contact + comment forms
+js/i18n.js            English / Persian switch: t("key", "fallback") and Persian digits
+js/theme.js           Dark mode toggle
+js/toast.js           Animated toast notifications
+js/site.js            Service worker registration and optional analytics
+sw.js                 Offline cache (bump VERSION when you change cached files)
+manifest.webmanifest  Install-as-app settings and icons
+css/main.css          Design tokens, layout, static + motion styles, dark and RTL rules
 prototypes/           The interactive concept prototypes the redesign came from
 images/               Avatars and the link-preview image (og-image.png)
 images/banners/       Project and publication cover images (WebP)
@@ -115,8 +134,19 @@ Everything you'd normally change lives in **`data.js`**, so you don't need to to
   myRole: "What I did.",
   shipped: "What came out of it.",
   note: "a short handwritten note ✎",
+
+  // the case-study page: case.html?p=my-new-app
+  slug: "my-new-app",
+  summary: "One paragraph about the product and your part in it.",
+  facts: [["Role", "Product Designer"], ["Timeline", "2027"]],
+  process: [{ title: "Research", text: "What you did in this step." }],
+  decisions: [{ title: "Why X over Y", text: "The trade-off you made." }],
+  outcome: ["What changed because of the work."],
+  compare: { before: "images/before.webp", after: "images/after.webp" },  // optional slider
 },
 ```
+
+The **How I work** steps live in `process` and the **Now** card in `now`. Update `now.updated` when you change it.
 
 **Add a project** to the archive in `projects` (newest first):
 
@@ -147,6 +177,20 @@ Everything you'd normally change lives in **`data.js`**, so you don't need to to
 
 Any text can contain a link written as `[link text](https://...)`. Banners display at roughly 4:3; WebP keeps them small.
 
+### 🌐 Persian version
+
+`data.fa.js` holds the Persian text. `ui` has the interface strings, matched by the `data-i18n` keys in the HTML and the `t()` calls in the scripts. `caseStudies`, `process` and `now` override the English items **by position**, so when you add a case study to `data.js`, add its translation at the same position. Anything without a translation falls back to English. Experience, the archive and publications stay in English on purpose.
+
+### 📊 Analytics (optional)
+
+Create a free site at [goatcounter.com](https://www.goatcounter.com) and put its code in `data.js`:
+
+```js
+analytics: { goatcounter: "your-code" },
+```
+
+It sets no cookies and loads nothing while the code is empty.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- AUTHORS -->
@@ -164,7 +208,9 @@ Any text can contain a link written as `[link text](https://...)`. Banners displ
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [ ] Case-study pages for selected projects
+- [x] Case-study pages for selected projects
+- [ ] Before/after images for the case-study slider
+- [ ] Persian translations for experience and publications
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

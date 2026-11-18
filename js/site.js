@@ -2,7 +2,7 @@
 
 (function () {
   // GoatCounter: cookie-free page counts, only when a code is set in data.js
-  const code = window.SITE_DATA && SITE_DATA.analytics && SITE_DATA.analytics.goatcounter;
+  const code = typeof SITE_DATA !== "undefined" && SITE_DATA.analytics && SITE_DATA.analytics.goatcounter;
   if (code && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
     const s = document.createElement("script");
     s.async = true;
