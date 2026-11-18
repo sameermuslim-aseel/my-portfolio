@@ -64,13 +64,21 @@ html[data-theme="dark"] {
   color-scheme: dark;
 }
 /* design-file frames sit above the darker canvas, like artboards in Figma */
-html[data-theme="dark"] .frame,
-html[data-theme="dark"] .pub-card {
+html[data-theme="dark"] .frame {
   background: #1f2531;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 24px 60px rgba(0, 0, 0, 0.55);
 }
+/* pinned magazines are printed paper, like the sticky notes: light in both themes */
+html[data-theme="dark"] .pub-card {
+  background: #f1efe9;
+  color: #15181e;
+  box-shadow: 0 24px 50px -10px rgba(0, 0, 0, 0.7);
+}
+html[data-theme="dark"] .pub-card p {
+  color: #4a505c;
+}
 html[data-theme="dark"] .pub-card:hover {
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 34px 70px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 34px 70px -10px rgba(0, 0, 0, 0.8);
 }
 html[data-theme="dark"] .hero-portrait {
   background: #c99a1c;
