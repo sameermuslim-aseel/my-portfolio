@@ -394,7 +394,8 @@ function setupBoard() {
     },
   });
   return () => {
-    tween.scrollTrigger.kill();
+    // gsap.matchMedia may already have reverted these, so guard each step
+    tween.scrollTrigger?.kill();
     tween.kill();
     gsap.set(track, { clearProps: "x" });
     board.style.overflow = "";
