@@ -432,11 +432,6 @@
 
                   <p>Send Message</p>
                 </button>
-                <div
-                  class="loading-text"
-                  style="color: var(--title-orange-yellow-crayola); transition: 0.5s ease-in-out"
-                  id="result"
-                ></div>
               </form>
             </div>
           </div>
@@ -444,6 +439,10 @@
       </main>
     </div>
     <!-- main-Container Ends here -->
+
+    <!-- Toast notifications (contact form status); announced by screen readers -->
+    <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
     <script src="data.js"></script>
     <script src="index.js"></script>
   </body>

@@ -334,20 +334,116 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// ---------------------------------------------------------------------------
+// Toast notifications
+// ---------------------------------------------------------------------------
+
+const toastRegion = document.getElementById("toast-region");
+
+const TOAST_ICONS = {
+  loading: '<span class="toast-spinner"></span>',
+  success:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="toast-check" d="M5 12.5l4.5 4.5L19 7.5" /></svg>',
+  error:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="toast-cross" d="M7 7l10 10M17 7L7 17" /></svg>',
+};
+
+// Shows a toast and returns a controller to update or close it.
+// duration: ms before it hides itself (0 = stay until updated or closed)
+function showToast({ type = "success", title, message = "", duration = 5000 }) {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.setAttribute("role", type === "error" ? "alert" : "status");
+  toast.innerHTML = `
+    <div class="toast-icon"></div>
+    <div class="toast-body">
+      <p class="toast-title"></p>
+      <p class="toast-message"></p>
+    </div>
+    <button type="button" class="toast-close" aria-label="Close notification">&times;</button>
+    <span class="toast-progress"></span>`;
+  toastRegion.appendChild(toast);
+
+  let timer = null;
+  let remaining = 0;
+  let startedAt = 0;
+
+  function close() {
+    clearTimeout(timer);
+    if (toast.classList.contains("leaving")) return;
+    toast.classList.add("leaving");
+    toast.addEventListener("animationend", () => toast.remove(), { once: true });
+    // Fallback if animations are disabled
+    setTimeout(() => toast.remove(), 600);
+  }
+
+  function startTimer(ms) {
+    clearTimeout(timer);
+    remaining = ms;
+    startedAt = Date.now();
+    timer = setTimeout(close, ms);
+  }
+
+  function update(next) {
+    const t = next.type || type;
+    toast.dataset.type = t;
+    const iconBox = toast.querySelector(".toast-icon");
+    iconBox.innerHTML = TOAST_ICONS[t];
+    // Replay the pop-in animation for the new icon
+    iconBox.style.animation = "none";
+    void iconBox.offsetWidth;
+    iconBox.style.animation = "";
+    toast.querySelector(".toast-title").textContent = next.title || "";
+    toast.querySelector(".toast-message").textContent = next.message || "";
+    toast.setAttribute("role", t === "error" ? "alert" : "status");
+
+    // Restart the countdown bar animation
+    const bar = toast.querySelector(".toast-progress");
+    const ms = next.duration ?? 5000;
+    bar.style.animation = "none";
+    void bar.offsetWidth;
+    bar.style.animation = ms ? `toast-progress ${ms}ms linear forwards` : "none";
+    bar.hidden = !ms;
+    clearTimeout(timer);
+    if (ms) startTimer(ms);
+  }
+
+  // Pause the countdown while the pointer is over the toast
+  toast.addEventListener("mouseenter", () => {
+    if (!remaining) return;
+    clearTimeout(timer);
+    remaining -= Date.now() - startedAt;
+    toast.classList.add("paused");
+  });
+  toast.addEventListener("mouseleave", () => {
+    if (!remaining || toast.classList.contains("leaving")) return;
+    toast.classList.remove("paused");
+    startTimer(Math.max(remaining, 800));
+  });
+  toast.querySelector(".toast-close").addEventListener("click", close);
+
+  update({ type, title, message, duration });
+  return { update, close };
+}
+
+// ---------------------------------------------------------------------------
+// Contact form
+// ---------------------------------------------------------------------------
+
 const form = document.getElementById("form");
-const result = document.getElementById("result");
+const sendBtn = form.querySelector(".send-btn");
 
 form.addEventListener("submit", function (e) {
-  const formData = new FormData(form);
   e.preventDefault();
+  const json = JSON.stringify(Object.fromEntries(new FormData(form)));
 
-  const object = Object.fromEntries(formData);
-  const json = JSON.stringify(object);
-
-  // Show the status text again (it is hidden after each attempt)
-  clearTimeout(result.hideTimer);
-  result.style.display = "block";
-  result.textContent = "Please wait...";
+  sendBtn.disabled = true;
+  const toast = showToast({
+    type: "loading",
+    title: "Sending your message…",
+    message: "This only takes a moment.",
+    duration: 0,
+  });
 
   fetch("https://api.web3forms.com/submit", {
     method: "POST",
@@ -358,20 +454,30 @@ form.addEventListener("submit", function (e) {
     body: json,
   })
     .then(async (response) => {
-      const json = await response.json();
-      result.textContent = json.message;
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.message);
       // Only clear the form when the message was actually sent
-      if (response.ok) {
-        form.reset();
-      }
+      form.reset();
+      toast.update({
+        type: "success",
+        title: "Message sent!",
+        message: "Thanks for reaching out. I'll get back to you soon.",
+      });
     })
-    .catch(() => {
-      result.textContent = "Something went wrong! Please try again.";
+    .catch((error) => {
+      toast.update({
+        type: "error",
+        title: "Message not sent",
+        // A TypeError means the request never reached the server (offline, blocked)
+        message:
+          error instanceof TypeError || !error.message
+            ? "Something went wrong. Please check your connection and try again."
+            : error.message,
+        duration: 7000,
+      });
     })
-    .then(function () {
-      result.hideTimer = setTimeout(() => {
-        result.style.display = "none";
-      }, 5000);
+    .finally(() => {
+      sendBtn.disabled = false;
     });
 });
 
