@@ -227,6 +227,27 @@
             <h3 class="display small">Comments on my work</h3>
           </div>
           <div class="kind-board" id="kind-board"></div>
+
+          <!-- visitors can leave a comment; it is emailed to Sameer and published by hand -->
+          <div class="add-comment">
+            <button type="button" class="comment-add" id="comment-add" aria-expanded="false" aria-controls="comment-form">
+              <span class="comment-add-pin">+</span> Leave a comment on my work
+            </button>
+            <form class="comment-composer" id="comment-form" hidden>
+              <div class="comment-pin you-pin" aria-hidden="true">You</div>
+              <div class="composer-body">
+                <label class="sr">Your comment<textarea name="message" rows="3" required placeholder="Worked with me, or just liked something? Say it here…"></textarea></label>
+                <div class="composer-row">
+                  <label class="sr">Your name<input type="text" name="name" required placeholder="Your name" autocomplete="name" /></label>
+                  <label class="sr">Role or company (optional)<input type="text" name="role" placeholder="Role / company (optional)" autocomplete="organization-title" /></label>
+                </div>
+                <div class="composer-foot">
+                  <span>I read every comment before it appears here.</span>
+                  <button type="submit" class="btn btn-accent comment-send">Post comment</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </section>
 
@@ -247,7 +268,6 @@
           </div>
 
           <form class="contact-form" id="form" name="contact-form">
-            <input type="hidden" name="access_key" value="1522fab6-b445-4eff-aa73-f60a3ecb9379" />
             <label>Your name<input type="text" name="name" id="name" autocomplete="name" required /></label>
             <label>Email<input type="email" name="email" id="email" autocomplete="email" required /></label>
             <label>What are we building?<textarea name="message" id="message" rows="5" required></textarea></label>

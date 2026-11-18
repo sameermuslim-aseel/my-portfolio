@@ -609,31 +609,32 @@ function showToast({ type = "success", title, message = "", duration = 5000 }) {
   return { update, close };
 }
 
-const form = $("#form");
-const sendBtn = $(".send-btn", form);
+// Web3Forms emails anything posted with this key to Sameer
+const WEB3FORMS_KEY = "1522fab6-b445-4eff-aa73-f60a3ecb9379";
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const json = JSON.stringify(Object.fromEntries(new FormData(form)));
+// Sends a form to Sameer's inbox with loading / success / error toasts.
+// Resolves to true when the message was delivered.
+function sendToInbox(form, payload, text) {
+  const button = $("[type=submit]", form);
+  button.disabled = true;
+  const toast = showToast({ type: "loading", title: text.sending, message: "This only takes a moment.", duration: 0 });
 
-  sendBtn.disabled = true;
-  const toast = showToast({ type: "loading", title: "Sending your message…", message: "This only takes a moment.", duration: 0 });
-
-  fetch("https://api.web3forms.com/submit", {
+  return fetch("https://api.web3forms.com/submit", {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: json,
+    body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...payload }),
   })
     .then(async (response) => {
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data.message);
       form.reset();
-      toast.update({ type: "success", title: "Message sent!", message: "Thanks for reaching out. I'll get back to you soon." });
+      toast.update({ type: "success", title: text.done, message: text.doneMessage });
+      return true;
     })
     .catch((error) => {
       toast.update({
         type: "error",
-        title: "Message not sent",
+        title: text.failed,
         // A TypeError means the request never reached the server (offline, blocked)
         message:
           error instanceof TypeError || !error.message
@@ -641,8 +642,55 @@ form.addEventListener("submit", (e) => {
             : error.message,
         duration: 7000,
       });
+      return false;
     })
     .finally(() => {
-      sendBtn.disabled = false;
+      button.disabled = false;
     });
+}
+
+// Contact form
+const form = $("#form");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  sendToInbox(form, Object.fromEntries(new FormData(form)), {
+    sending: "Sending your message…",
+    done: "Message sent!",
+    doneMessage: "Thanks for reaching out. I'll get back to you soon.",
+    failed: "Message not sent",
+  });
+});
+
+// Visitor comments: emailed for review, then added to data.js by hand
+const commentBtn = $("#comment-add");
+const commentForm = $("#comment-form");
+commentBtn.addEventListener("click", () => {
+  const open = commentForm.hidden;
+  commentForm.hidden = !open;
+  commentBtn.setAttribute("aria-expanded", open);
+  if (open) $("textarea", commentForm).focus();
+});
+commentForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const f = Object.fromEntries(new FormData(commentForm));
+  const sent = await sendToInbox(
+    commentForm,
+    {
+      subject: `New portfolio comment from ${f.name}`,
+      from_name: "Portfolio comments",
+      name: f.name,
+      role: f.role || "—",
+      message: f.message,
+    },
+    {
+      sending: "Posting your comment…",
+      done: "Comment received ✓",
+      doneMessage: "Thank you! It will appear here once I've read it.",
+      failed: "Comment not sent",
+    }
+  );
+  if (sent) {
+    commentForm.hidden = true;
+    commentBtn.setAttribute("aria-expanded", false);
+  }
 });

@@ -2556,3 +2556,122 @@ html[data-theme="dark"] .theme-btn .i-moon {
   font: 13px var(--f-mono);
   color: var(--muted);
 }
+
+/* =========================================================================
+   VISITOR COMMENTS (Kind words)
+   ========================================================================= */
+.add-comment {
+  margin-top: 70px;
+  max-width: 640px;
+}
+.comment-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px 8px 8px;
+  border: 1.5px dashed var(--muted);
+  border-radius: 999px;
+  background: none;
+  font: 600 16px var(--f-ui);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.comment-add:hover,
+.comment-add[aria-expanded="true"] {
+  border-color: var(--violet);
+  color: var(--violet);
+}
+.comment-add-pin {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50% 50% 50% 6px;
+  background: var(--violet);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+}
+.comment-composer {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 16px;
+  margin-top: 18px;
+  animation: menu-in 0.35s var(--ease);
+}
+.comment-composer[hidden] {
+  display: none;
+}
+.you-pin {
+  display: grid;
+  place-items: center;
+  background: var(--green);
+  color: #fff;
+  font: 600 13px var(--f-ui);
+}
+.composer-body {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 4px 18px 18px 18px;
+  background: var(--surface);
+  border: 1.5px solid var(--violet);
+  box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.3);
+}
+/* labels stay for screen readers; the placeholders show the hint */
+.composer-body label.sr {
+  display: block;
+  font-size: 0;
+}
+.composer-body textarea,
+.composer-body input {
+  width: 100%;
+  font: 16px var(--f-ui);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 11px 13px;
+  resize: vertical;
+}
+.composer-body textarea:focus,
+.composer-body input:focus {
+  outline: none;
+  border-color: var(--violet);
+}
+.composer-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.composer-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font: 12px var(--f-mono);
+  color: var(--muted);
+}
+.comment-send {
+  padding: 11px 20px;
+  font: 600 15px var(--f-ui);
+  background: var(--violet);
+  border-color: var(--violet);
+  box-shadow: none;
+}
+.comment-send:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+@media (max-width: 600px) {
+  .composer-row {
+    grid-template-columns: 1fr;
+  }
+  .comment-composer {
+    grid-template-columns: 1fr;
+  }
+  .comment-composer .you-pin {
+    display: none;
+  }
+}
