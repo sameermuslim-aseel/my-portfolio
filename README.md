@@ -32,20 +32,21 @@ My personal portfolio: who I am, my resume, selected projects, publications and 
 
 ## 🛠 Built With <a name="built-with"></a>
 
-Plain **HTML5, CSS and JavaScript**: no framework and no build step.
+Plain **HTML5, CSS and JavaScript**: no framework and no build step. Libraries load from a CDN:
 
+- [GSAP](https://gsap.com) + ScrollTrigger for scroll-driven animation
+- [Lenis](https://lenis.darkroom.engineering) for smooth scrolling
 - [Web3Forms](https://web3forms.com) for the contact form
-- Google Fonts (Poppins) and an embedded Google Map
+- Google Fonts: Fraunces, Inter Tight, JetBrains Mono, Gaegu
 
 ## ✨ Features <a name="features"></a>
 
-- **Tabbed single page** (About, Resume, Portfolio, Publications, Contact), with each tab linkable by URL, e.g. `#portfolio`
-- **Light and dark mode** that follows the visitor's system setting and remembers their choice
-- **Portfolio filter** by category
-- **Testimonial popup**, usable with mouse and keyboard
+- **Sketch → Ship hero**: the page starts as a hand-drawn wireframe; scrolling "designs" it into the final layout
+- **Work as a design file**: case studies are frames on a canvas, with a layers panel, inspector, sticky notes and a camera that flies between them
+- **Writing board and kind words**: magazine issues pinned to a board, testimonials as design comments
+- **Works without motion**: on phones, with reduced motion, or if the CDN fails, the same content shows as a clean static page
 - **SEO-ready**: meta description, Open Graph / Twitter preview card, `Person` structured data
-- **Accessible**: real buttons and links, visible keyboard focus, reduced-motion support
-- **Fast**: lazy-loaded images and a trimmed font request
+- **Accessible**: semantic sections, keyboard focus styles, decorative layers hidden from screen readers
 
 <!-- LIVE DEMO -->
 
@@ -85,11 +86,12 @@ Push to `main` and enable **GitHub Pages** (Settings → Pages → deploy from b
 ## 🗂 Project Structure <a name="project-structure"></a>
 
 ```
-data.js               ★ All the content: services, testimonials, resume, skills, projects, publications
-index.html            Page layout, sidebar, contact form and the shared icon sprite
-index.js              Builds the sections from data.js; tabs, theme toggle, popup, filter, contact form
-css/style.css         Styles and responsive breakpoints
-images/               Avatars, icons and the link-preview image (og-image.png)
+data.js               ★ All the content: case studies, projects, resume, skills, publications, testimonials
+index.html            Page structure (hero wireframe, sections, contact form)
+js/main.js            Renders data.js, runs the scroll animations, contact form + toasts
+css/main.css          Design tokens, layout, static + motion styles
+prototypes/           The interactive concept prototypes the redesign came from
+images/               Avatars and the link-preview image (og-image.png)
 images/banners/       Project and publication cover images (WebP)
 assets/               Resume PDF
 ```
@@ -98,13 +100,31 @@ assets/               Resume PDF
 
 Everything you'd normally change lives in **`data.js`**, so you don't need to touch the HTML. Copy an existing entry, edit it, save.
 
-**Add a project** to `projects` (newest first):
+**Feature a project** in the Work canvas by adding it to `caseStudies` (the first three work best):
 
 ```js
 {
   title: "My New App",
-  category: "Application",          // one of `categories`, used by the filter
-  tags: ["Open Source Project"],    // extra filters it should appear under
+  client: "Company",
+  year: "2027",
+  type: "Mobile app",
+  role: "Product Designer",
+  image: "images/banners/my-new-app.webp",
+  url: "https://...",
+  problem: "What wasn't working for people.",
+  myRole: "What I did.",
+  shipped: "What came out of it.",
+  note: "a short handwritten note ✎",
+},
+```
+
+**Add a project** to the archive in `projects` (newest first):
+
+```js
+{
+  title: "My New App",
+  category: "Application",          // shown as the label above the card
+  tags: ["Open Source Project"],
   url: "https://github.com/...",
   image: "images/banners/my-new-app.webp",
   alt: "My New App banner",

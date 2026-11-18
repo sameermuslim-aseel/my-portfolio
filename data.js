@@ -4,6 +4,49 @@
 // Text is plain text. To add a link inside any text, write [link text](https://example.com).
 
 const SITE_DATA = {
+  // Featured projects shown as "design file" frames in the Work section (in order)
+  caseStudies: [
+    {
+      title: "Buy Good & Sell Good",
+      client: "Aseel Technology",
+      year: "2024 – now",
+      type: "Marketplace · Web",
+      role: "Product Manager",
+      image: "images/banners/aseel-banner.webp",
+      url: "https://aseelapp.com/buy-good",
+      problem: "Artisans in underserved communities can't easily reach buyers around the world.",
+      myRole: "Product Manager & UI/UX Designer: UX audits, user research, roadmap, hi-fi UI.",
+      shipped: "Redesigned the Sell Good platform and the seller landing page.",
+      note: "research with real sellers first ✎",
+    },
+    {
+      title: "Tikko",
+      client: "Personal product",
+      year: "2026",
+      type: "Mobile PWA · RTL",
+      role: "Designer & developer",
+      image: "images/banners/tikko-banner.webp",
+      url: "https://github.com/sameermuslim-aseel/Tikko",
+      problem: "Families juggle recurring chores with no simple, shared “today” list.",
+      myRole: "Designed and built it end to end, right-to-left in Persian from day one.",
+      shipped: "A PWA where one person assigns daily tasks and everyone ticks them off, with streaks and stats.",
+      note: "green means done — and only done ✓",
+    },
+    {
+      title: "Toosha",
+      client: "Open source",
+      year: "Android",
+      type: "Mobile app",
+      role: "Designer & developer",
+      image: "images/banners/Tosha-app.webp",
+      url: "https://github.com/sameermuslim/Toosha",
+      problem: "Keeping track of daily prayers and azkar should be calm, not cluttered.",
+      myRole: "Designed the interface and built the Android app.",
+      shipped: "Prayer tracking with information, reminders and analytics.",
+      note: "warm yellow = morning light ☀",
+    },
+  ],
+
   services: [
     {
       icon: "design",
