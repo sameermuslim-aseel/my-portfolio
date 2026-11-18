@@ -494,6 +494,9 @@ hr {
 }
 .contact-data {
   color: var(--white-1);
+  /* small enough for the full email to fit the sidebar */
+  font-size: 12px;
+  letter-spacing: -0.02em;
 }
 address {
   font-style: normal;
