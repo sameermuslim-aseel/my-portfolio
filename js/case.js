@@ -43,6 +43,8 @@ if (index === -1) {
 } else {
   const c = cases[index];
   const next = cases[(index + 1) % cases.length];
+  const wire = c.compare && c.compare.kind === "wireframe";
+  const caption = c.compare && (c.compare.caption || (wire ? t("wireCaption", "Drag the handle: the first wireframe on the left, the shipped design on the right.") : ""));
   document.title = `${c.title} — ${t("caseStudy", "case study")} | ${t("me", "Sameer Muslim")}`;
   $('meta[name="description"]').setAttribute("content", c.summary);
 
@@ -79,12 +81,12 @@ if (index === -1) {
       <figure class="compare">
         <div class="compare-box" style="--pos: 50%">
           <img src="${c.compare.after}" alt="${t("after", "After")}: ${escapeHtml(c.title)}" />
-          <img class="compare-before" src="${c.compare.before}" alt="${t("before", "Before")}" />
-          <span class="compare-tag before">${t("before", "Before")}</span><span class="compare-tag after">${t("after", "After")}</span>
+          <img class="compare-before" src="${c.compare.before}" alt="${wire ? t("wireframe", "Wireframe") : t("before", "Before")}: ${escapeHtml(c.title)}" />
+          <span class="compare-tag before">${wire ? t("wireframe", "Wireframe") : t("before", "Before")}</span><span class="compare-tag after">${wire ? t("final", "Final design") : t("after", "After")}</span>
           <span class="compare-handle" aria-hidden="true">⇆</span>
           <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="${t("compareLabel", "Drag to compare before and after")}" />
         </div>
-        ${c.compare.caption ? `<figcaption>${escapeHtml(c.compare.caption)}</figcaption>` : ""}
+        ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}
       </figure>
     </section>`
         : ""

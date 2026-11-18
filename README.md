@@ -209,7 +209,7 @@ It sets no cookies and loads nothing while the code is empty.
 ## 🔭 Future Features <a name="future-features"></a>
 
 - [x] Case-study pages for selected projects
-- [ ] Before/after images for the case-study slider
+- [x] Wireframe → final sliders on the case-study pages
 - [ ] Persian translations for experience and publications
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

@@ -24,6 +24,7 @@ const SITE_DATA = {
       note: "research with real sellers first ✎",
       // Case-study page (case.html?p=buy-good)
       slug: "buy-good",
+      compare: { before: "images/wireframes/buy-good.svg", after: "images/banners/aseel-banner.webp", kind: "wireframe" },
       summary:
         "Aseel's Buy Good marketplace lets people buy handmade goods directly from artisans in underserved communities. I joined as UI/UX designer and now lead the product as Product Manager.",
       facts: [
@@ -59,6 +60,7 @@ const SITE_DATA = {
       shipped: "A PWA where one person assigns daily tasks and everyone ticks them off, with streaks and stats.",
       note: "green means done — and only done ✓",
       slug: "tikko",
+      compare: { before: "images/wireframes/tikko.svg", after: "images/banners/tikko-banner.webp", kind: "wireframe" },
       summary:
         "A family task manager in Persian. One person in the household assigns recurring daily tasks, and everyone ticks them off in a simple “today” view.",
       facts: [
@@ -95,6 +97,7 @@ const SITE_DATA = {
       shipped: "Prayer tracking with information, reminders and analytics.",
       note: "warm yellow = morning light ☀",
       slug: "toosha",
+      compare: { before: "images/wireframes/toosha.svg", after: "images/banners/Tosha-app.webp", kind: "wireframe" },
       summary:
         "An Android app that helps Muslims keep track of their daily prayers and azkar, with information, reminders and simple analytics.",
       facts: [
