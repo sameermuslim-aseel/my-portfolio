@@ -200,7 +200,10 @@
 <div class="hint" id="hint">Scroll to fly through the file ↓</div>
 
 <script>
-  const FRAMES = [
+  // #p=0.5 shows the animation at that point (for sharing a moment); real scrolling takes over
+  let FORCED = (location.hash.match(/p=([\d.]+)/) || [])[1];
+  FORCED = FORCED === undefined ? undefined : parseFloat(FORCED);
+  ["wheel", "touchstart", "keydown"].forEach((ev) => addEventListener(ev, () => { FORCED = undefined; }, { once: true, passive: true }));  const FRAMES = [
     { name: "Hero — Desktop", children: ["Headline", "avatar.webp", "Comment · Nancy"],
       props: [["Name", "Sameer Muslim"], ["Role", "Product Designer & Frontend Dev"], ["Experience", "4+ years"], ["Now", "PM @ Aseel"], ["Based in", "Afghanistan · Remote"]] },
     { name: "Case 01 — Buy Good", children: ["Problem", "My role", "What shipped"],
@@ -254,7 +257,7 @@
 
   function render() {
     const max = document.documentElement.scrollHeight - innerHeight;
-    const p = clamp(scrollY / max, 0, 1) * (frames.length - 1);
+    const p = clamp(FORCED ?? scrollY / max, 0, 1) * (frames.length - 1);
     const seg = Math.min(Math.floor(p), frames.length - 2);
     const local = p - seg;
     // hold on each frame for a moment, then fly to the next
