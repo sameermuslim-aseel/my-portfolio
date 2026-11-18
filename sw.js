@@ -3,7 +3,7 @@
 // fall back to the cached copy when offline. Fonts and CDN libraries are
 // versioned URLs, so those are served from the cache once fetched.
 
-const VERSION = "v1";
+const VERSION = "v2";
 const CACHE = `sameer-${VERSION}`;
 
 const CORE = [
@@ -13,6 +13,8 @@ const CORE = [
   "resume.html",
   "styleguide.html",
   "data.js",
+  "data.fa.js",
+  "js/i18n.js",
   "css/main.css",
   "js/main.js",
   "js/case.js",

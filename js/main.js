@@ -46,7 +46,7 @@ $("#hero-cards").innerHTML = CASES.map(
 $("#world").innerHTML = CASES.map(
   (c, i) => `
   <article class="frame" data-frame="${i}" aria-labelledby="case-${i}">
-    <p class="frame-label">Case ${pad(i + 1)} — ${escapeHtml(c.title)}</p>
+    <p class="frame-label">${t("case", "Case")} ${num(pad(i + 1))} — ${escapeHtml(c.title)}</p>
     <div class="frame-body">
       <div class="frame-main">
         <p class="kicker">${escapeHtml(c.client)} · ${escapeHtml(c.year)}</p>
@@ -59,12 +59,12 @@ $("#world").innerHTML = CASES.map(
       </div>
       <div class="frame-notes">
         <div class="stickies">
-          <div class="sticky"><b>The problem</b>${escapeHtml(c.problem)}</div>
-          <div class="sticky g"><b>My role</b>${escapeHtml(c.myRole)}</div>
-          <div class="sticky p"><b>What shipped</b>${escapeHtml(c.shipped)}</div>
+          <div class="sticky"><b>${t("problem", "The problem")}</b>${escapeHtml(c.problem)}</div>
+          <div class="sticky g"><b>${t("myRole", "My role")}</b>${escapeHtml(c.myRole)}</div>
+          <div class="sticky p"><b>${t("shipped", "What shipped")}</b>${escapeHtml(c.shipped)}</div>
         </div>
         <p class="frame-note">${escapeHtml(c.note)}</p>
-        <div class="frame-meta"><span>${escapeHtml(c.type)}</span><span class="frame-links">${link(c.url, "Live ↗", "frame-link muted")}<a class="frame-link" href="case.html?p=${c.slug}">Read the case study →</a></span></div>
+        <div class="frame-meta"><span>${escapeHtml(c.type)}</span><span class="frame-links">${link(c.url, t("live", "Live ↗"), "frame-link muted")}<a class="frame-link" href="case.html?p=${c.slug}">${t("readCase", "Read the case study →")}</a></span></div>
       </div>
     </div>
   </article>`
@@ -72,8 +72,8 @@ $("#world").innerHTML = CASES.map(
 
 $("#layers").innerHTML = CASES.map(
   (c, i) =>
-    `<div class="layer" data-go="${i}"><i>#</i>Case ${pad(i + 1)} — ${escapeHtml(c.title)}</div>` +
-    ["Title", "Preview", "Problem", "My role", "What shipped"]
+    `<div class="layer" data-go="${i}"><i>#</i>${t("case", "Case")} ${num(pad(i + 1))} — ${escapeHtml(c.title)}</div>` +
+    [t("layerTitle", "Title"), t("layerPreview", "Preview"), t("problem", "Problem"), t("myRole", "My role"), t("shipped", "What shipped")]
       .map((n) => `<div class="layer child" data-go="${i}">${n}</div>`)
       .join("")
 ).join("");
@@ -107,18 +107,18 @@ $("#process-steps").innerHTML = DATA.process
   .map(
     (s, i) => `
   <li class="process-step" data-reveal>
-    <span class="step-n">${pad(i + 1)}</span>
+    <span class="step-n">${num(pad(i + 1))}</span>
     <h3>${escapeHtml(s.title)}</h3>
     <p>${richText(s.text)}</p>
     <ul class="step-tools">${s.tools.map((t) => `<li>${escapeHtml(t)}</li>`).join("")}</ul>
-    <p class="step-example">e.g. ${escapeHtml(s.example)}</p>
+    <p class="step-example">${t("eg", "e.g.")} ${escapeHtml(s.example)}</p>
   </li>`
   )
   .join("");
 
 // Now card
 $("#now").innerHTML = `
-  <p class="now-head"><i></i>Now <span>· updated ${escapeHtml(DATA.now.updated)}</span></p>
+  <p class="now-head"><i></i>${t("nowLabel", "Now")} <span>· ${t("updated", "updated")} ${escapeHtml(DATA.now.updated)}</span></p>
   <ul>${DATA.now.items.map((n) => `<li><b>${escapeHtml(n.label)}</b> ${richText(n.text)}</li>`).join("")}</ul>`;
 
 $("#exp-list").innerHTML = resume.Experience.map(
@@ -141,7 +141,7 @@ const learnList = (title, items) => `
       .map((i) => `<li><div>${richText(i.role)}<small>${(i.at || []).map((o) => escapeHtml(o.name)).join(" & ")}</small></div><span>${escapeHtml(i.date || "")}</span></li>`)
       .join("")}</ul>
   </div>`;
-$("#learn").innerHTML = learnList("Education", resume.Education) + learnList("Certifications", resume.Certification);
+$("#learn").innerHTML = learnList(t("education", "Education"), resume.Education) + learnList(t("certifications", "Certifications"), resume.Certification);
 
 const CHIP_COLORS = ["#2b4eff", "#ffcf4a", "#0acf83", "#e5484d", "#9747ff", "#0d99ff"];
 const chips = DATA.skills.map((s, i) => `<span class="chip" style="--chip:${CHIP_COLORS[i % CHIP_COLORS.length]}">${escapeHtml(s)}</span>`).join("");
@@ -153,7 +153,7 @@ $("#board-track").innerHTML =
     .map(
       (b, i) => `
   <article class="pub">
-    <span class="pub-label">Issue ${pad(i)} — ${escapeHtml(b.date)}</span>
+    <span class="pub-label">${t("issue", "Issue")} ${num(pad(i))} — ${escapeHtml(b.date)}</span>
     <a class="pub-card" href="${b.url}" target="_blank" rel="noopener noreferrer">
       <img src="${b.image}" alt="${escapeHtml(b.alt)}" loading="lazy" />
       <h4>${escapeHtml(b.title)}</h4>
@@ -161,18 +161,18 @@ $("#board-track").innerHTML =
     </a>
   </article>`
     )
-    .join("") + `<p class="pub-end" aria-hidden="true">six issues,<br />zero sleep ✎</p>`;
+    .join("") + `<p class="pub-end" aria-hidden="true">${t("pubEnd", "six issues,<br />zero sleep ✎")}</p>`;
 
 // Kind words: testimonials as resolved comments
 $("#kind-board").innerHTML = DATA.testimonials
   .map(
-    (t) => `
+    (tm) => `
   <figure class="comment" data-reveal>
-    <div class="comment-pin"><img src="${t.avatar}" alt="" loading="lazy" /></div>
+    <div class="comment-pin"><img src="${tm.avatar}" alt="" loading="lazy" /></div>
     <div class="comment-body">
-      <figcaption class="comment-who"><b>${escapeHtml(t.name)}</b><span>${escapeHtml(t.position)}</span></figcaption>
-      <blockquote class="comment-text">${escapeHtml(t.text)}</blockquote>
-      <div class="comment-foot"><span>${escapeHtml(t.date)}</span><span class="resolved">✓ Resolved</span></div>
+      <figcaption class="comment-who"><b>${escapeHtml(tm.name)}</b><span>${escapeHtml(tm.position)}</span></figcaption>
+      <blockquote class="comment-text">${escapeHtml(tm.text)}</blockquote>
+      <div class="comment-foot"><span>${escapeHtml(tm.date)}</span><span class="resolved">${t("resolved", "✓ Resolved")}</span></div>
     </div>
   </figure>`
   )
@@ -206,7 +206,7 @@ const menuBtn = $("#nav-menu");
 function setMenu(open) {
   nav.classList.toggle("open", open);
   menuBtn.setAttribute("aria-expanded", open);
-  menuBtn.setAttribute("aria-label", open ? "Close menu" : "Menu");
+  menuBtn.setAttribute("aria-label", open ? t("closeMenu", "Close menu") : t("menu", "Menu"));
 }
 menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
 document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
@@ -219,8 +219,8 @@ function toggleWireframe() {
   if (wireToast) wireToast.close();
   wireToast = showToast({
     type: "success",
-    title: on ? "Wireframe mode ✎" : "Back to hi-fi",
-    message: on ? "This is how every page starts. Press W again to switch back." : "Press W any time to see the sketch.",
+    title: on ? t("wireOn", "Wireframe mode ✎") : t("wireOff", "Back to hi-fi"),
+    message: on ? t("wireOnMsg", "This is how every page starts. Press W again to switch back.") : t("wireOffMsg", "Press W any time to see the sketch."),
     duration: 3500,
   });
 }
@@ -388,11 +388,11 @@ function setupCanvas() {
     inspector.style.opacity = 0;
     setTimeout(() => {
       inspector.innerHTML =
-        `<p class="insp-title">Case ${pad(i + 1)} — ${escapeHtml(c.title)}</p>` +
-        [["Client", c.client], ["Role", c.role], ["Timeline", c.year], ["Type", c.type]]
+        `<p class="insp-title">${t("case", "Case")} ${num(pad(i + 1))} — ${escapeHtml(c.title)}</p>` +
+        [[t("client", "Client"), c.client], [t("role", "Role"), c.role], [t("timeline", "Timeline"), c.year], [t("type", "Type"), c.type]]
           .map(([k, v]) => `<div class="prop"><span>${k}</span><span>${escapeHtml(v)}</span></div>`)
           .join("") +
-        `<div class="prop"><span>Fill</span><span class="swatches">${SWATCH.map((s) => `<b style="background:${s}"></b>`).join("")}</span></div>`;
+        `<div class="prop"><span>${t("fill", "Fill")}</span><span class="swatches">${SWATCH.map((s) => `<b style="background:${s}"></b>`).join("")}</span></div>`;
       inspector.style.opacity = 1;
     }, 160);
   };
@@ -542,7 +542,7 @@ const WEB3FORMS_KEY = "1522fab6-b445-4eff-aa73-f60a3ecb9379";
 function sendToInbox(form, payload, text) {
   const button = $("[type=submit]", form);
   button.disabled = true;
-  const toast = showToast({ type: "loading", title: text.sending, message: "This only takes a moment.", duration: 0 });
+  const toast = showToast({ type: "loading", title: text.sending, message: t("moment", "This only takes a moment."), duration: 0 });
 
   return fetch("https://api.web3forms.com/submit", {
     method: "POST",
@@ -563,7 +563,7 @@ function sendToInbox(form, payload, text) {
         // A TypeError means the request never reached the server (offline, blocked)
         message:
           error instanceof TypeError || !error.message
-            ? "Something went wrong. Please check your connection and try again."
+            ? t("offline", "Something went wrong. Please check your connection and try again.")
             : error.message,
         duration: 7000,
       });
@@ -579,10 +579,10 @@ const form = $("#form");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   sendToInbox(form, Object.fromEntries(new FormData(form)), {
-    sending: "Sending your message…",
-    done: "Message sent!",
-    doneMessage: "Thanks for reaching out. I'll get back to you soon.",
-    failed: "Message not sent",
+    sending: t("sending", "Sending your message…"),
+    done: t("sent", "Message sent!"),
+    doneMessage: t("sentMsg", "Thanks for reaching out. I'll get back to you soon."),
+    failed: t("notSent", "Message not sent"),
   });
 });
 
@@ -608,10 +608,10 @@ commentForm.addEventListener("submit", async (e) => {
       message: f.message,
     },
     {
-      sending: "Posting your comment…",
-      done: "Comment received ✓",
-      doneMessage: "Thank you! It will appear here once I've read it.",
-      failed: "Comment not sent",
+      sending: t("commentSending", "Posting your comment…"),
+      done: t("commentSent", "Comment received ✓"),
+      doneMessage: t("commentSentMsg", "Thank you! It will appear here once I've read it."),
+      failed: t("commentNotSent", "Comment not sent"),
     }
   );
   if (sent) {

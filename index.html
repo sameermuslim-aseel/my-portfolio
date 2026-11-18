@@ -55,33 +55,43 @@
         try { t = localStorage.getItem("theme"); } catch (e) {}
         if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         document.documentElement.dataset.theme = t;
+        var l = null;
+        try {
+          var q = new URLSearchParams(location.search).get("lang");
+          if (q) localStorage.setItem("lang", q);
+          l = q || localStorage.getItem("lang");
+        } catch (e) {}
+        if (l === "fa") { document.documentElement.lang = "fa"; document.documentElement.dir = "rtl"; }
       })();
-    </script>    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Gaegu:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Gaegu:wght@400;700&family=Vazirmatn:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="preload" as="image" href="images/my-avatar1.webp" fetchpriority="high" />
     <link rel="stylesheet" href="css/main.css" />
   </head>
 
-  <body>
-    <a class="skip" href="#work">Skip to work</a>
+  <body data-page="home">
+    <a class="skip" href="#work" data-i18n="skip">Skip to work</a>
 
     <!-- ============ NAV ============ -->
     <header class="nav" id="nav">
       <a class="nav-logo" href="#top">Sameer Muslim<span>.</span></a>
       <nav class="nav-links" id="nav-links" aria-label="Sections">
-        <a href="#work">Work</a>
-        <a href="#experience">Experience</a>
-        <a href="#writing">Writing</a>
-        <a href="#contact">Contact</a>
+        <a href="#work" data-i18n="nav.work">Work</a>
+        <a href="#experience" data-i18n="nav.experience">Experience</a>
+        <a href="#writing" data-i18n="nav.writing">Writing</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
+      <button type="button" class="lang-btn" id="lang-btn" lang="fa" aria-label="نسخهٔ فارسی" data-i18n="nav.lang" data-i18n-aria="nav.langLabel">فا</button>
       <button type="button" class="theme-btn" id="theme-btn" aria-label="Dark mode" aria-pressed="false">
         <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" /></svg>
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" /></svg>
-      </button>      <a class="nav-cta" href="#contact">Let's talk</a>
+      </button>
+      <a class="nav-cta" href="#contact" data-i18n="nav.cta">Let's talk</a>
       <button type="button" class="nav-menu" id="nav-menu" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
         <span></span><span></span>
       </button>
@@ -102,16 +112,16 @@
                 <div class="bar" style="width: 86%; margin-top: 30px"></div>
                 <div class="bar" style="width: 70%"></div>
                 <div class="wire-btns"><div class="sk pill"></div><div class="sk pill dash"></div></div>
-                <p class="note red n1">BIG headline!<br />serif? ✎</p>
+                <p class="note red n1" data-i18n="hero.n1">BIG headline!<br />serif? ✎</p>
                 <svg class="scribble s1" viewBox="0 0 60 60"><path d="M50 5 C 35 20, 20 30, 8 50 M8 50 L 22 46 M8 50 L 10 36" /></svg>
-                <p class="note blue n2">← make it pop!</p>
+                <p class="note blue n2" data-i18n="hero.n2">← make it pop!</p>
               </div>
-              <div class="sk xbox wire-photo"><svg preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M3 3 L97 97 M97 3 L3 97" /></svg><p class="note ink n3">photo of me? 🤔<br />(or the memoji)</p></div>
+              <div class="sk xbox wire-photo"><svg preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M3 3 L97 97 M97 3 L3 97" /></svg><p class="note ink n3" data-i18n="hero.n3">photo of me? 🤔<br />(or the memoji)</p></div>
             </div>
             <div class="hero-cards">
               <div class="sk xbox"><svg preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M3 3 L97 97 M97 3 L3 97" /></svg></div>
               <div class="sk xbox"><svg preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M3 3 L97 97 M97 3 L3 97" /></svg></div>
-              <div class="sk xbox"><svg preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M3 3 L97 97 M97 3 L3 97" /></svg><p class="note blue n4">3 best projects</p></div>
+              <div class="sk xbox"><svg preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M3 3 L97 97 M97 3 L3 97" /></svg><p class="note blue n4" data-i18n="hero.n4">3 best projects</p></div>
             </div>
           </div>
 
@@ -119,16 +129,16 @@
           <div class="hero-layer final" id="hero-final">
             <div class="hero-grid">
               <div class="hero-copy">
-                <p class="eyebrow">Product Designer &amp; Frontend Developer</p>
-                <h1 class="hero-title">Every good product starts as a <em>messy sketch</em>.</h1>
-                <p class="hero-lead">I'm Sameer. For 4+ years I've taken ideas from rough paper sketches to research-backed, accessible products, and built many of them myself.</p>
+                <p class="eyebrow" data-i18n="hero.eyebrow">Product Designer &amp; Frontend Developer</p>
+                <h1 class="hero-title" data-i18n="hero.title">Every good product starts as a <em>messy sketch</em>.</h1>
+                <p class="hero-lead" data-i18n="hero.lead">I'm Sameer. For 4+ years I've taken ideas from rough paper sketches to research-backed, accessible products, and built many of them myself.</p>
                 <div class="hero-ctas">
-                  <a class="btn btn-accent" href="#work">See the work</a>
-                  <a class="btn btn-line" href="resume.html">View résumé</a>
+                  <a class="btn btn-accent" href="#work" data-i18n="hero.see">See the work</a>
+                  <a class="btn btn-line" href="resume.html" data-i18n="hero.resume">View résumé</a>
                 </div>
               </div>
               <div class="hero-portrait">
-                <span class="stamp"><i></i>Now · Product Manager @ Aseel</span>
+                <span class="stamp" data-i18n="hero.stamp"><i></i>Now · Product Manager @ Aseel</span>
                 <img src="images/my-avatar1.webp" alt="Sameer Muslim's memoji avatar" width="500" height="500" fetchpriority="high" />
               </div>
             </div>
@@ -140,21 +150,21 @@
           </div>
 
           <ol class="rail" id="rail" aria-hidden="true">
-            <li><i><b></b></i>01 · Sketch</li>
-            <li><i><b></b></i>02 · Wireframe</li>
-            <li><i><b></b></i>03 · Visual design</li>
-            <li><i><b></b></i>04 · Ship</li>
+            <li data-i18n="rail.1"><i><b></b></i>01 · Sketch</li>
+            <li data-i18n="rail.2"><i><b></b></i>02 · Wireframe</li>
+            <li data-i18n="rail.3"><i><b></b></i>03 · Visual design</li>
+            <li data-i18n="rail.4"><i><b></b></i>04 · Ship</li>
           </ol>
-          <p class="hero-hint" id="hero-hint" aria-hidden="true">scroll to design it ↓</p>
+          <p class="hero-hint" id="hero-hint" aria-hidden="true" data-i18n="hero.hint">scroll to design it ↓</p>
         </div>
       </section>
 
       <!-- ============ WORK · The Canvas ============ -->
       <section class="work" id="work" aria-labelledby="work-title">
         <div class="section-head container">
-          <p class="eyebrow">Selected work</p>
-          <h2 id="work-title" class="display">Straight from my <em>design file</em>.</h2>
-          <p class="section-sub">Three projects, opened the way I work on them: frames, sticky notes and all.</p>
+          <p class="eyebrow" data-i18n="work.eyebrow">Selected work</p>
+          <h2 id="work-title" class="display" data-i18n="work.title">Straight from my <em>design file</em>.</h2>
+          <p class="section-sub" data-i18n="work.sub">Three projects, opened the way I work on them: frames, sticky notes and all.</p>
         </div>
 
         <div class="canvas" id="canvas">
@@ -179,8 +189,8 @@
 
         <div class="archive container">
           <div class="archive-head">
-            <h3 class="display small">More from the archive</h3>
-            <p class="section-sub">Websites, Android apps and experiments since 2017.</p>
+            <h3 class="display small" data-i18n="archive.title">More from the archive</h3>
+            <p class="section-sub" data-i18n="archive.sub">Websites, Android apps and experiments since 2017.</p>
           </div>
           <ul class="archive-grid" id="archive"></ul>
         </div>
@@ -189,9 +199,9 @@
       <!-- ============ HOW I WORK ============ -->
       <section class="process" id="process" aria-labelledby="process-title">
         <div class="section-head container">
-          <p class="eyebrow">How I work</p>
-          <h2 id="process-title" class="display">From a <em>conversation</em> to shipped code.</h2>
-          <p class="section-sub">Five steps I follow on every project. Each one starts rough and gets sharper as it goes.</p>
+          <p class="eyebrow" data-i18n="process.eyebrow">How I work</p>
+          <h2 id="process-title" class="display" data-i18n="process.title">From a <em>conversation</em> to shipped code.</h2>
+          <p class="section-sub" data-i18n="process.sub">Five steps I follow on every project. Each one starts rough and gets sharper as it goes.</p>
         </div>
         <div class="container">
           <ol class="process-steps" id="process-steps"></ol>
@@ -202,9 +212,10 @@
       <section class="experience" id="experience" aria-labelledby="exp-title">
         <div class="container exp-wrap">
           <div class="exp-side">
-            <p class="eyebrow">Experience</p>
-            <h2 id="exp-title" class="display">Nine roles,<br /><em>one habit</em>: start with people.</h2>
-            <a class="btn btn-line" href="resume.html">Full résumé</a>
+            <p class="eyebrow" data-i18n="exp.eyebrow">Experience</p>
+            <h2 id="exp-title" class="display" data-i18n="exp.title">Nine roles,<br /><em>one habit</em>: start with people.</h2>
+            <a class="btn btn-line" href="resume.html" data-i18n="exp.resume">Full résumé</a>
+            <p class="exp-note" data-i18n="exp.note"></p>
             <aside class="now" id="now" aria-label="What I'm doing now"></aside>
           </div>
           <ol class="exp-list" id="exp-list"></ol>
@@ -216,9 +227,9 @@
       <!-- ============ WRITING · a board of frames ============ -->
       <section class="writing" id="writing" aria-labelledby="writing-title">
         <div class="section-head container">
-          <p class="eyebrow">Writing</p>
-          <h2 id="writing-title" class="display">Where I learned <em>layout</em>.</h2>
-          <p class="section-sub">Before product design, I co-founded and edited ZerOne, the first electronic tech magazine in Afghanistan. Every issue on this board.</p>
+          <p class="eyebrow" data-i18n="writing.eyebrow">Writing</p>
+          <h2 id="writing-title" class="display" data-i18n="writing.title">Where I learned <em>layout</em>.</h2>
+          <p class="section-sub" data-i18n="writing.sub">Before product design, I co-founded and edited ZerOne, the first electronic tech magazine in Afghanistan. Every issue on this board.</p>
         </div>
         <div class="board" id="board">
           <div class="board-track" id="board-track"></div>
@@ -226,27 +237,27 @@
 
         <div class="kind container" id="kind">
           <div class="kind-head">
-            <p class="eyebrow">Kind words</p>
-            <h3 class="display small">Comments on my work</h3>
+            <p class="eyebrow" data-i18n="kind.eyebrow">Kind words</p>
+            <h3 class="display small" data-i18n="kind.title">Comments on my work</h3>
           </div>
           <div class="kind-board" id="kind-board"></div>
 
           <!-- visitors can leave a comment; it is emailed to Sameer and published by hand -->
           <div class="add-comment">
-            <button type="button" class="comment-add" id="comment-add" aria-expanded="false" aria-controls="comment-form">
+            <button type="button" class="comment-add" id="comment-add" aria-expanded="false" aria-controls="comment-form" data-i18n="comment.add">
               <span class="comment-add-pin">+</span> Leave a comment on my work
             </button>
             <form class="comment-composer" id="comment-form" hidden>
-              <div class="comment-pin you-pin" aria-hidden="true">You</div>
+              <div class="comment-pin you-pin" aria-hidden="true" data-i18n="comment.you">You</div>
               <div class="composer-body">
-                <label class="sr">Your comment<textarea name="message" rows="3" required placeholder="Worked with me, or just liked something? Say it here…"></textarea></label>
+                <label class="sr"><span data-i18n="comment.label">Your comment</span><textarea name="message" rows="3" required data-i18n-ph="comment.placeholder" placeholder="Worked with me, or just liked something? Say it here…"></textarea></label>
                 <div class="composer-row">
-                  <label class="sr">Your name<input type="text" name="name" required placeholder="Your name" autocomplete="name" /></label>
-                  <label class="sr">Role or company (optional)<input type="text" name="role" placeholder="Role / company (optional)" autocomplete="organization-title" /></label>
+                  <label class="sr"><span data-i18n="comment.name">Your name</span><input type="text" name="name" required data-i18n-ph="comment.name" placeholder="Your name" autocomplete="name" /></label>
+                  <label class="sr"><span data-i18n="comment.role">Role or company (optional)</span><input type="text" name="role" data-i18n-ph="comment.role" placeholder="Role / company (optional)" autocomplete="organization-title" /></label>
                 </div>
                 <div class="composer-foot">
-                  <span>I read every comment before it appears here.</span>
-                  <button type="submit" class="btn btn-accent comment-send">Post comment</button>
+                  <span data-i18n="comment.foot">I read every comment before it appears here.</span>
+                  <button type="submit" class="btn btn-accent comment-send" data-i18n="comment.post">Post comment</button>
                 </div>
               </div>
             </form>
@@ -258,9 +269,9 @@
       <section class="contact" id="contact" aria-labelledby="contact-title">
         <div class="container contact-wrap">
           <div class="contact-copy">
-            <p class="frame-label">Contact — Final frame</p>
-            <h2 id="contact-title" class="display light">Let's make something people <em>love</em>.</h2>
-            <p class="contact-sub">Open to product design and frontend work. I usually reply within a day or two.</p>
+            <p class="frame-label" data-i18n="contact.label">Contact — Final frame</p>
+            <h2 id="contact-title" class="display light" data-i18n="contact.title">Let's make something people <em>love</em>.</h2>
+            <p class="contact-sub" data-i18n="contact.sub">Open to product design and frontend work. I usually reply within a day or two.</p>
             <ul class="contact-links">
               <li><a href="mailto:iamsameerdev@gmail.com">iamsameerdev@gmail.com</a></li>
               <li><a href="https://www.linkedin.com/in/m-sameer-muslim-55a5a4166/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
@@ -271,15 +282,15 @@
           </div>
 
           <form class="contact-form" id="form" name="contact-form">
-            <label>Your name<input type="text" name="name" id="name" autocomplete="name" required /></label>
-            <label>Email<input type="email" name="email" id="email" autocomplete="email" required /></label>
-            <label>What are we building?<textarea name="message" id="message" rows="5" required></textarea></label>
-            <button type="submit" class="btn btn-accent send-btn">Send message →</button>
+            <label><span data-i18n="contact.name">Your name</span><input type="text" name="name" id="name" autocomplete="name" required /></label>
+            <label><span data-i18n="contact.email">Email</span><input type="email" name="email" id="email" autocomplete="email" required /></label>
+            <label><span data-i18n="contact.message">What are we building?</span><textarea name="message" id="message" rows="5" required></textarea></label>
+            <button type="submit" class="btn btn-accent send-btn" data-i18n="contact.send">Send message →</button>
           </form>
         </div>
         <footer class="footer container">
-          <span>© 2026 Sameer Muslim · Designed &amp; built by hand · <a href="styleguide.html">Design system</a> · <a href="resume.html">Résumé</a></span>
-          <button type="button" class="wire-toggle hand" id="wire-toggle">this site started as a sketch ✎ <small>(press W)</small></button>
+          <span data-i18n="footer.text">© 2026 Sameer Muslim · Designed &amp; built by hand · <a href="styleguide.html">Design system</a> · <a href="resume.html">Résumé</a></span>
+          <button type="button" class="wire-toggle hand" id="wire-toggle" data-i18n="footer.wire">this site started as a sketch ✎ <small>(press W)</small></button>
         </footer>
       </section>
     </main>
@@ -288,6 +299,8 @@
     <div id="toast-region" class="toast-region" aria-live="polite"></div>
 
     <script src="data.js"></script>
+    <script src="data.fa.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
