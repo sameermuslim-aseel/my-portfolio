@@ -36,7 +36,7 @@ const STICKY = ["", "g", "p"];
 // Hero: the three featured projects
 $("#hero-cards").innerHTML = CASES.map(
   (c) => `
-  <a class="hero-card" href="#work">
+  <a class="hero-card" href="case.html?p=${c.slug}">
     <img src="${c.image}" alt="" loading="lazy" />
     <span>${escapeHtml(c.title)}</span>
   </a>`
@@ -64,7 +64,7 @@ $("#world").innerHTML = CASES.map(
           <div class="sticky p"><b>What shipped</b>${escapeHtml(c.shipped)}</div>
         </div>
         <p class="frame-note">${escapeHtml(c.note)}</p>
-        <div class="frame-meta"><span>${escapeHtml(c.type)}</span>${link(c.url, "Open project ↗", "frame-link")}</div>
+        <div class="frame-meta"><span>${escapeHtml(c.type)}</span><span class="frame-links">${link(c.url, "Live ↗", "frame-link muted")}<a class="frame-link" href="case.html?p=${c.slug}">Read the case study →</a></span></div>
       </div>
     </div>
   </article>`

@@ -18,6 +18,29 @@ const SITE_DATA = {
       myRole: "Product Manager & UI/UX Designer: UX audits, user research, roadmap, hi-fi UI.",
       shipped: "Redesigned the Sell Good platform and the seller landing page.",
       note: "research with real sellers first ✎",
+      // Case-study page (case.html?p=buy-good)
+      slug: "buy-good",
+      summary:
+        "Aseel's Buy Good marketplace lets people buy handmade goods directly from artisans in underserved communities. I joined as UI/UX designer and now lead the product as Product Manager.",
+      facts: [
+        ["Role", "UI/UX Designer → Product Manager"],
+        ["Timeline", "Nov 2024 – now"],
+        ["Company", "Aseel Technology Inc. · remote"],
+        ["Platform", "Web marketplace for buyers & sellers"],
+      ],
+      process: [
+        { title: "Audit", text: "Ran comprehensive UX and UI audits of the marketplace to find where buyers and sellers got stuck." },
+        { title: "Research", text: "Led user research and case studies with key sellers and buyers, plus surveys and usability testing." },
+        { title: "Define", text: "Turned findings into personas, sitemaps and user flows, and a product roadmap aligned with Aseel's goals." },
+        { title: "Design", text: "Wireframes, interactive prototypes and high-fidelity designs, iterated on feedback, inside a consistent, WCAG-aware design system." },
+        { title: "Ship & iterate", text: "Worked across design, engineering and marketing to ship, then iterated using analytics and user feedback." },
+      ],
+      decisions: [],
+      outcome: [
+        "Redesigned the Sell Good platform and the seller landing page.",
+        "Improved usability, engagement and visual consistency across the Aseel website.",
+        "A structured product roadmap and clearer workflows between design, engineering and marketing.",
+      ],
     },
     {
       title: "Tikko",
@@ -31,6 +54,29 @@ const SITE_DATA = {
       myRole: "Designed and built it end to end, right-to-left in Persian from day one.",
       shipped: "A PWA where one person assigns daily tasks and everyone ticks them off, with streaks and stats.",
       note: "green means done — and only done ✓",
+      slug: "tikko",
+      summary:
+        "A family task manager in Persian. One person in the household assigns recurring daily tasks, and everyone ticks them off in a simple “today” view.",
+      facts: [
+        ["Role", "Designer & developer (solo)"],
+        ["Year", "2026"],
+        ["Platform", "Mobile-first PWA, right-to-left"],
+        ["Stack", "Next.js · Supabase · Tailwind · shadcn/ui"],
+      ],
+      process: [
+        { title: "Plan", text: "Wrote the product plan first, then shipped in stages: setup, data & sign-in, the “today” view, personal tasks, the admin dashboard, and the installable app." },
+        { title: "Design for RTL", text: "Designed right-to-left in Persian from day one, with the Vazirmatn typeface and Persian (Jalali) dates." },
+        { title: "Build", text: "Built it with Next.js, Supabase and Tailwind as an installable progressive web app." },
+        { title: "Iterate", text: "Phase two added streaks and stats, so finishing your tasks feels rewarding." },
+      ],
+      decisions: [
+        { title: "Green means done, and only done", text: "The rest of the interface stays monochrome so the green tick feels like a reward. An earlier grey “done” state read as disabled." },
+        { title: "Password sign-in instead of magic links", text: "Magic links need a custom email domain. Password sign-in kept the product shippable without one, and switching later is a small change." },
+      ],
+      outcome: [
+        "All planned stages shipped, plus streaks and stats.",
+        "Live as an installable app that works on any phone.",
+      ],
     },
     {
       title: "Toosha",
@@ -44,6 +90,22 @@ const SITE_DATA = {
       myRole: "Designed the interface and built the Android app.",
       shipped: "Prayer tracking with information, reminders and analytics.",
       note: "warm yellow = morning light ☀",
+      slug: "toosha",
+      summary:
+        "An Android app that helps Muslims keep track of their daily prayers and azkar, with information, reminders and simple analytics.",
+      facts: [
+        ["Role", "Designer & developer"],
+        ["Platform", "Android"],
+        ["License", "Open source"],
+        ["Language", "Persian (RTL)"],
+      ],
+      process: [
+        { title: "Structure", text: "Organised the app around the moments of the day: morning, evening, mosque, sleep and prayer azkar, each one tap from home." },
+        { title: "Design", text: "A calm home screen with a large photo and a grid of rounded tiles, in a warm, friendly yellow." },
+        { title: "Build", text: "Built the Android app and published the source code openly." },
+      ],
+      decisions: [],
+      outcome: ["Prayer tracking with information, reminders and analytics.", "Open source, so anyone can learn from or improve it."],
     },
   ],
 
