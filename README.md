@@ -2,7 +2,9 @@
 
 <div align="center">
 
-  <h1><b>I'm Sameer,  Portfolio</b></h1>
+  <h1><b>Sameer Muslim · Portfolio</b></h1>
+
+  <p>Product Designer & Frontend Developer</p>
 
 </div>
 
@@ -12,30 +14,42 @@
 
 - [📖 About Project](#about-project)
   - [🛠 Built With](#built-with)
+  - [✨ Features](#features)
   - [🚀 Live Demo](#live-demo)
 - [💻 Getting Started](#getting-started)
+- [🗂 Project Structure](#project-structure)
 - [👥 Authors](#authors)
 - [🔭 Future Features](#future-features)
 - [🤝 Contributing](#contributing)
 - [⭐️ Show your support](#support)
-- [🙏 Acknowledgements](#acknowledgements)
 - [📝 License](#license)
 
 <!-- PROJECT DESCRIPTION -->
 
 # 📖 Portfolio <a name="about-project"></a>
 
-<p> I'm a dynamic software developer known for strong communication, social skills, and a passion for tackling challenging projects. Proficient in web development, I bring a collaborative approach to ensure success in every endeavor.</p>
+My personal portfolio: who I am, my resume, selected projects, publications and a contact form. I'm a Product Designer and Frontend Developer with 4+ years of experience in UI/UX design, design systems, user research and web development, currently Product Manager at [Aseel](https://aseelapp.com).
 
-## 🛠 Built With <a name="built-with">HTML & CSS & JavaScript</a>
+## 🛠 Built With <a name="built-with"></a>
 
-<p>To construct this project, I utilized HTML5 for the structure, CSS for design, and JavaScript for functionality.  </p>
+Plain **HTML5, CSS and JavaScript**: no framework and no build step.
+
+- [Web3Forms](https://web3forms.com) for the contact form
+- Google Fonts (Poppins) and an embedded Google Map
+
+## ✨ Features <a name="features"></a>
+
+- **Tabbed single page** (About, Resume, Portfolio, Publications, Contact), with each tab linkable by URL, e.g. `#portfolio`
+- **Light and dark mode** that follows the visitor's system setting and remembers their choice
+- **Portfolio filter** by category
+- **Testimonial popup**, usable with mouse and keyboard
+- **SEO-ready**: meta description, Open Graph / Twitter preview card, `Person` structured data
+- **Accessible**: real buttons and links, visible keyboard focus, reduced-motion support
+- **Fast**: lazy-loaded images and a trimmed font request
 
 <!-- LIVE DEMO -->
 
-## 🚀 Live Demo <a name="live-demo">
-
-<h3> Here you can see  the project. </h3>
+## 🚀 Live Demo <a name="live-demo"></a>
 
 <a href="https://sameermuslim.github.io/my-portfolio/">https://sameermuslim.github.io/my-portfolio/</a>
 
@@ -45,39 +59,61 @@
 
 ## 💻 Getting Started <a name="getting-started"></a>
 
-To get a local copy up and running, follow these steps.
-
-### Prerequisites
-
-In order to run this project you need:
-Google Chrome | Mozilla Firefox | Microsoft Edge or another browser.
-VS Code | Sublime | TextAtom or any other IDE.
-
 ### Setup
 
-Clone this repository to your desired folder:
+Clone this repository:
 
-git clone https://github.com/sameermuslim/my-portfolio.git
+```bash
+git clone https://github.com/sameermuslim-aseel/my-portfolio.git
+cd my-portfolio
+```
+
+### Run locally
+
+Open `index.html` in a browser, or serve the folder so everything behaves like the live site:
+
+```bash
+npx serve .
+```
+
+### Deploy
+
+Push to `main` and enable **GitHub Pages** (Settings → Pages → deploy from branch). If the site URL changes, update the `canonical`, `og:url`, `og:image` and structured-data URLs at the top of `index.html`.
+
+<!-- PROJECT STRUCTURE -->
+
+## 🗂 Project Structure <a name="project-structure"></a>
+
+```
+index.html            All page content and sections
+index.js              Tabs, theme toggle, testimonial popup, portfolio filter, contact form
+css/style.css         Styles and responsive breakpoints
+images/               Avatars, icons and the link-preview image (og-image.png)
+images/banners/       Project and publication cover images (WebP)
+assets/               Resume PDF
+```
+
+**Adding a project:** copy one `<li class="port-list-li">` block in the Portfolio section of `index.html`, then change the link, banner image, category and description. Banners display at roughly 4:3; WebP keeps them small.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- AUTHORS -->
 
 ## 👥 Authors <a name="authors"></a>
 
-> Sameer Muslim
+👤 **Sameer Muslim**
 
-👤 **Author**
-
-- GitHub: [Sameer Muslim](https://github.com/sameermuslim)
+- GitHub: [@sameermuslim](https://github.com/sameermuslim)
 - LinkedIn: [M. Sameer Muslim](https://www.linkedin.com/in/m-sameer-muslim-55a5a4166/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- FUTURE FEATURES -->
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-I Will add these section in my portfolio next version:
-
-- [ ] **[Blogs]**
+- [ ] Case-study pages for selected projects
+- [ ] Move projects and resume data into a JSON file
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -85,24 +121,15 @@ I Will add these section in my portfolio next version:
 
 ## 🤝 Contributing <a name="contributing"></a>
 
-CFeel free to contribute, report issues, or suggest new features! Your input is highly valued and appreciated.
-
-Feel free to check the [issues page](../../issues/).
+Feel free to report issues or suggest new features! Check the [issues page](../../issues/).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- SUPPORT -->
 
 ## ⭐️ Show your support <a name="support"></a>
 
-I invite you to explore my portfolio and share your valuable feedback. Your insights are greatly appreciated.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGEMENTS -->
-
-## 🙏 Acknowledgments <a name="acknowledgements"></a>
-
-I extend my gratitude to everyone who takes the time to visit my portfolio. Thank you for your consideration.
+If you like this portfolio, give it a ⭐️ and share your feedback.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -110,6 +137,6 @@ I extend my gratitude to everyone who takes the time to visit my portfolio. Than
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](./LICENSE) licensed.
+This project is [MIT](./LiCENCE) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

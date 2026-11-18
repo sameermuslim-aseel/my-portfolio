@@ -1858,3 +1858,15 @@ button:focus-visible,
     scroll-behavior: auto !important;
   }
 }
+/* Bottom menu on tablets and phones: spread the five links across the full bar */
+@media (max-width: 770px) {
+  .menu-bar-ul {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 16px;
+    justify-content: space-between;
+  }
+  .menu-bar .menu-bar-link {
+    margin-right: 0;
+  }
+}
