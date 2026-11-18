@@ -1953,7 +1953,7 @@ html[data-theme="dark"] .theme-btn .i-moon {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     margin: 0 -6px;
-    padding: 6px 6px 14px;
+    padding: 16px 6px 14px; /* room for the pins */
   }
   .stickies .sticky {
     flex: 0 0 80%;
@@ -3074,5 +3074,99 @@ html[lang="fa"] .board {
     inset-inline-start: auto;
     inset-inline-end: 4px;
     font-size: 20px;
+  }
+}
+
+/* ===================== Push pins ===================== */
+/* a glossy pin head (::before) and the shadow its needle casts (::after) */
+:root {
+  --pin-red: #e5484d;
+  --pin-blue: #2b4eff;
+  --pin-yellow: #f5b400;
+  --pin-green: #19a974;
+}
+.sticky,
+.pub-card,
+.now {
+  position: relative;
+  --pin: var(--pin-red);
+  --pin-x: 50%;
+}
+:is(.sticky, .pub-card, .now)::before,
+:is(.sticky, .pub-card, .now)::after {
+  content: "";
+  position: absolute;
+  left: var(--pin-x);
+  pointer-events: none;
+}
+:is(.sticky, .pub-card, .now)::before {
+  top: -10px;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.9) 0 2px, transparent 3.5px),
+    radial-gradient(circle at 40% 38%, var(--pin) 0 45%, color-mix(in srgb, var(--pin) 62%, #000) 100%);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 2px 4px 5px -1px rgba(0, 0, 0, 0.3);
+}
+:is(.sticky, .pub-card, .now)::after {
+  top: 4px;
+  z-index: 1;
+  width: 2px;
+  height: 13px;
+  margin-left: 3px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.22);
+  transform: rotate(-38deg);
+  transform-origin: top;
+  filter: blur(0.5px);
+}
+/* every pin a little different, like a real board */
+:is(.stickies, .case-brief) .sticky:nth-child(1) {
+  --pin: var(--pin-red);
+  --pin-x: 46%;
+}
+:is(.stickies, .case-brief) .sticky:nth-child(2) {
+  --pin: var(--pin-blue);
+  --pin-x: 56%;
+}
+:is(.stickies, .case-brief) .sticky:nth-child(3) {
+  --pin: var(--pin-green);
+  --pin-x: 50%;
+}
+.pub:nth-child(4n + 1) .pub-card {
+  --pin: var(--pin-red);
+  --pin-x: 48%;
+}
+.pub:nth-child(4n + 2) .pub-card {
+  --pin: var(--pin-yellow);
+  --pin-x: 54%;
+}
+.pub:nth-child(4n + 3) .pub-card {
+  --pin: var(--pin-blue);
+  --pin-x: 45%;
+}
+.pub:nth-child(4n + 4) .pub-card {
+  --pin: var(--pin-green);
+  --pin-x: 52%;
+}
+.now {
+  --pin: var(--pin-yellow);
+  --pin-x: 88%;
+}
+/* wireframe mode: pins become sketched circles */
+.wireframe :is(.sticky, .pub-card, .now)::before {
+  background: transparent;
+  border: 2px dashed currentColor;
+  box-shadow: none;
+}
+.wireframe :is(.sticky, .pub-card, .now)::after {
+  display: none;
+}
+@media print {
+  :is(.sticky, .pub-card, .now)::before,
+  :is(.sticky, .pub-card, .now)::after {
+    display: none;
   }
 }
