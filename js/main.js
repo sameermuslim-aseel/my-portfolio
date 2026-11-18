@@ -79,21 +79,70 @@ $("#layers").innerHTML = CASES.map(
 ).join("");
 
 // Archive: every other project
-const featured = CASES.map((c) => c.title.toLowerCase());
-const archive = DATA.projects.filter((p) => !featured.some((t) => p.title.toLowerCase().startsWith(t)));
+// matched by image, so it also works when titles are translated
+const featured = CASES.map((c) => c.image);
+// shown as a "version history" list: older work, newest first, preview on hover
+const archive = DATA.projects.filter((p) => !featured.includes(p.image));
+const SHOWN = 5;
 $("#archive").innerHTML = archive
   .map(
-    (p) => `
-  <li class="arch" data-reveal>
-    <a href="${p.url}" target="_blank" rel="noopener noreferrer">
-      <span class="arch-label">${escapeHtml(p.category)}</span>
-      <div class="arch-img"><img src="${p.image}" alt="${escapeHtml(p.alt)}" loading="lazy" /></div>
-      <h4>${escapeHtml(p.title)}</h4>
-      <p>${escapeHtml(p.description)}</p>
+    (p, i) => `
+  <li class="version${i >= SHOWN ? " extra" : ""}">
+    <a href="${p.url}" target="_blank" rel="noopener noreferrer" data-preview="${p.image}">
+      <span class="version-n"><i></i>v0.${archive.length - i}</span>
+      <span class="version-name"><b>${escapeHtml(p.title)}</b> <span>${escapeHtml(p.short || p.category)}</span></span>
+      <span class="version-kind">${escapeHtml(p.kind || p.category)}</span>
+      <span class="version-go" aria-hidden="true">↗</span>
     </a>
   </li>`
   )
   .join("");
+$("#versions-count").innerHTML = `<b>${num(archive.length)}</b> ${t("earlierVersions", "earlier versions")}`;
+
+const versions = $("#versions");
+const moreBtn = $("#versions-more");
+const extra = archive.slice(SHOWN);
+const setMore = (open) => {
+  versions.classList.toggle("open", open);
+  moreBtn.setAttribute("aria-expanded", open);
+  moreBtn.textContent = open
+    ? t("showLess", "Show less")
+    : `+ ${num(extra.length)} ${t("more", "more")} · ${extra.map((p) => p.title).join(", ")}`;
+};
+if (extra.length) {
+  setMore(false);
+  moreBtn.addEventListener("click", () => {
+    setMore(!versions.classList.contains("open"));
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  });
+} else moreBtn.remove();
+
+// hover preview: a small print of the project that follows the cursor (mouse only)
+if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  const preview = $("#version-preview");
+  const img = $("img", preview);
+  let x = 0;
+  let y = 0;
+  let raf = 0;
+  const place = () => {
+    raf = 0;
+    const box = versions.getBoundingClientRect();
+    const left = Math.min(Math.max(x - box.left + 28, 0), box.width - preview.offsetWidth);
+    preview.style.transform = `translate(${left}px, ${y - box.top - preview.offsetHeight - 18}px) rotate(2.5deg)`;
+  };
+  $$(".version a", versions).forEach((a) => {
+    a.addEventListener("mouseenter", () => {
+      img.src = a.dataset.preview;
+      preview.classList.add("on");
+    });
+    a.addEventListener("mouseleave", () => preview.classList.remove("on"));
+  });
+  versions.addEventListener("mousemove", (e) => {
+    x = e.clientX;
+    y = e.clientY;
+    if (!raf) raf = requestAnimationFrame(place);
+  });
+}
 
 // Experience
 const resume = Object.fromEntries(DATA.resume.map((s) => [s.title, s.items]));

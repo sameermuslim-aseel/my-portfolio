@@ -660,6 +660,8 @@ const SITE_DATA = {
     },
     {
       title: "Niyaz.Design",
+      short: "Portfolio for a UX/UI designer",
+      kind: "Website",
       category: "Web Development",
       tags: [
         "Web Development"
@@ -671,6 +673,8 @@ const SITE_DATA = {
     },
     {
       title: "Maamela",
+      short: "Property listings for Afghanistan",
+      kind: "Android",
       category: "Application",
       tags: [
         "Open Source Project"
@@ -682,6 +686,8 @@ const SITE_DATA = {
     },
     {
       title: "MK portfolio",
+      short: "My earlier personal site",
+      kind: "Website",
       category: "Web Development",
       tags: [
         "Web Development"
@@ -693,6 +699,8 @@ const SITE_DATA = {
     },
     {
       title: "The Triangle T Ranch",
+      short: "Historic Arizona guest ranch",
+      kind: "Website",
       category: "Web Development",
       tags: [
         "Web Development"
@@ -704,6 +712,8 @@ const SITE_DATA = {
     },
     {
       title: "FAQ App",
+      short: "Android app in Java",
+      kind: "Android",
       category: "Application",
       tags: [
         "Application"
@@ -715,6 +725,8 @@ const SITE_DATA = {
     },
     {
       title: "Sticky Wall",
+      short: "Notes and tasks interface",
+      kind: "Web UI",
       category: "Web Development",
       tags: [
         "Open Source Project"
@@ -726,6 +738,8 @@ const SITE_DATA = {
     },
     {
       title: "50 Projects 50 Days",
+      short: "A 50-day coding challenge",
+      kind: "Web",
       category: "Web Development",
       tags: [
         "Open Source Project"
@@ -737,6 +751,8 @@ const SITE_DATA = {
     },
     {
       title: "Animation CSS",
+      short: "Playing with animate.css",
+      kind: "Web",
       category: "Web Development",
       tags: [
         "Open Source Project"

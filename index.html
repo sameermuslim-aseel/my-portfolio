@@ -189,10 +189,17 @@
 
         <div class="archive container">
           <div class="archive-head">
-            <h3 class="display small" data-i18n="archive.title">More from the archive</h3>
-            <p class="section-sub" data-i18n="archive.sub">Websites, Android apps and experiments since 2017.</p>
+            <p class="eyebrow" data-i18n="archive.eyebrow">Version history</p>
+            <h3 class="display small" data-i18n="archive.title">Earlier versions of&nbsp;me.</h3>
+            <p class="section-sub" data-i18n="archive.sub">Sites, Android apps and experiments from before product design. Kept for the record: they're how I learned.</p>
+            <p class="archive-hand" aria-hidden="true" data-i18n="archive.hand">the good stuff is above ↑</p>
           </div>
-          <ul class="archive-grid" id="archive"></ul>
+          <div class="versions" id="versions">
+            <p class="versions-top"><span id="versions-count"></span><span data-i18n="archive.type">Type</span></p>
+            <ul class="versions-list" id="archive"></ul>
+            <button type="button" class="versions-more" id="versions-more" aria-expanded="false" aria-controls="archive"></button>
+            <figure class="version-preview" id="version-preview" aria-hidden="true"><img alt="" /></figure>
+          </div>
         </div>
       </section>
 
