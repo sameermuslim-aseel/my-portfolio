@@ -308,6 +308,17 @@ const SITE_DATA = {
       icon: "education",
       items: [
         {
+          role: "Master of Computer Applications (MCA)",
+          at: [
+            {
+              name: "Indira Gandhi National Open University (IGNOU)",
+              url: "https://www.ignou.ac.in"
+            }
+          ],
+          date: "July 2026 – present",
+          place: "Online"
+        },
+        {
           role: "English Language",
           at: [
             {
