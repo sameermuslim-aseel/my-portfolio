@@ -152,7 +152,10 @@ form.addEventListener("submit", function (e) {
   const object = Object.fromEntries(formData);
   const json = JSON.stringify(object);
 
-  result.innerHTML = "Please wait...";
+  // Show the status text again (it is hidden after each attempt)
+  clearTimeout(result.hideTimer);
+  result.style.display = "block";
+  result.textContent = "Please wait...";
 
   fetch("https://api.web3forms.com/submit", {
     method: "POST",
@@ -163,57 +166,22 @@ form.addEventListener("submit", function (e) {
     body: json,
   })
     .then(async (response) => {
-      let json = await response.json();
-      if (response.status == 200) {
-        result.innerHTML = json.message;
-      } else {
-        console.log(response);
-        result.innerHTML = json.message;
+      const json = await response.json();
+      result.textContent = json.message;
+      // Only clear the form when the message was actually sent
+      if (response.ok) {
+        form.reset();
       }
     })
-    .catch((error) => {
-      console.log(error);
-      result.innerHTML = "Something went wrong!";
+    .catch(() => {
+      result.textContent = "Something went wrong! Please try again.";
     })
     .then(function () {
-      form.reset();
-      setTimeout(() => {
+      result.hideTimer = setTimeout(() => {
         result.style.display = "none";
-      }, 3000);
+      }, 5000);
     });
 });
-
-function submitForm() {
-  // Fetch form data
-  var name = document.getElementById("name").value;
-  var email = document.getElementById("email").value;
-  var message = document.getElementById("message").value;
-
-  // Create a FormData object
-  var formData = new FormData();
-  formData.append("name", name);
-  formData.append("email", email);
-  formData.append("message", message);
-
-  // Send the form data to the server-side script using fetch
-  fetch("process.php", {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.text();
-    })
-    .then((data) => {
-      // Handle the response from the server (optional)
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error("There was a problem with the fetch operation:", error);
-    });
-}
 
 const mode_toggle_btn = document.getElementById("mode-toggle-btn");
 const mode_btn = document.getElementById("mood-btn");
@@ -256,10 +224,8 @@ mode_toggle_btn.addEventListener("click", () => {
   // if it not current enabled, enable it
   if (lightMode !== "enabled") {
     enableLightMode();
-    console.log(lightMode + " enabled");
     // if it has been enabled, turn it off
   } else {
     disableLightMode();
-    console.log(lightMode + " enabled");
   }
 });
