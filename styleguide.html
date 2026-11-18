@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design system | Sameer Muslim</title>
+    <meta name="description" content="The design system behind Sameer Muslim's portfolio: colors, type, components and motion." />
+    <meta name="theme-color" content="#fbfaf6" />
+    <link rel="icon" href="images/my-avatar.webp" type="image/webp" />
+    <script>
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Gaegu:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+
+  <body class="case-page">
+    <header class="nav" id="nav">
+      <a class="nav-logo" href="index.html">Sameer Muslim<span>.</span></a>
+      <nav class="nav-links" id="nav-links" aria-label="Site">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#writing">Writing</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <button type="button" class="theme-btn" id="theme-btn" aria-label="Dark mode" aria-pressed="false">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" /></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" /></svg>
+      </button>
+      <a class="nav-cta" href="index.html#contact">Let's talk</a>
+      <button type="button" class="nav-menu" id="nav-menu" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </header>
+
+    <main class="sg">
+      <header class="case-hero container">
+        <a class="case-back" href="index.html">← Back to the site</a>
+        <p class="frame-label">Library — Sameer Muslim DS v1</p>
+        <h1 class="case-title">Design <em>system</em></h1>
+        <p class="case-summary">
+          The tokens and components this website is built from. Two ideas drive everything: work starts as a
+          <span class="hand sg-hand">sketch</span>, and finished work lives in a design file.
+        </p>
+      </header>
+
+      <!-- COLOR -->
+      <section class="case-section container" aria-labelledby="sg-color">
+        <h2 class="case-h" id="sg-color"><span>01</span>Color</h2>
+        <p class="sg-note">Values update live with the theme toggle. Ultramarine is the only accent; Figma blue is reserved for selection.</p>
+        <div class="sg-swatches" id="sg-swatches"></div>
+      </section>
+
+      <!-- TYPE -->
+      <section class="case-section container" aria-labelledby="sg-type">
+        <h2 class="case-h" id="sg-type"><span>02</span>Typography</h2>
+        <div class="sg-type">
+          <div class="sg-type-row">
+            <span class="sg-meta">Display · Fraunces 600</span>
+            <p class="display">Every good product starts as a <em>messy sketch</em>.</p>
+          </div>
+          <div class="sg-type-row">
+            <span class="sg-meta">Heading · Inter Tight 800</span>
+            <p class="sg-h">Buy Good &amp; Sell Good</p>
+          </div>
+          <div class="sg-type-row">
+            <span class="sg-meta">Body · Inter Tight 400</span>
+            <p class="section-sub">I take ideas from rough paper sketches to research-backed, accessible products.</p>
+          </div>
+          <div class="sg-type-row">
+            <span class="sg-meta">Label · JetBrains Mono 500</span>
+            <p class="eyebrow">Product Designer &amp; Frontend Developer</p>
+          </div>
+          <div class="sg-type-row">
+            <span class="sg-meta">Annotation · Gaegu 700</span>
+            <p class="frame-note">research with real sellers first ✎</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPONENTS -->
+      <section class="case-section container" aria-labelledby="sg-components">
+        <h2 class="case-h" id="sg-components"><span>03</span>Components</h2>
+        <div class="sg-grid">
+          <figure class="sg-cell">
+            <div class="sg-demo sg-row">
+              <a class="btn btn-accent" href="#sg-components">Primary</a>
+              <a class="btn btn-line" href="#sg-components">Secondary</a>
+            </div>
+            <figcaption>Buttons · pill, 1.5px ink outline</figcaption>
+          </figure>
+          <figure class="sg-cell">
+            <div class="sg-demo sg-row">
+              <span class="chip" style="--chip: #2b4eff">Figma</span>
+              <span class="chip" style="--chip: #0acf83">User Research</span>
+            </div>
+            <figcaption>Chips · skills and tags</figcaption>
+          </figure>
+          <figure class="sg-cell">
+            <div class="sg-demo">
+              <div class="sticky"><b>The problem</b>Sticky notes carry the story of each project.</div>
+            </div>
+            <figcaption>Sticky note · yellow, green, pink, blue</figcaption>
+          </figure>
+          <figure class="sg-cell">
+            <div class="sg-demo sg-center">
+              <span class="frame-title sel sg-sel">Selected<i class="handle h-tl"></i><i class="handle h-tr"></i><i class="handle h-bl"></i><i class="handle h-br"></i><span class="badge">Hug × Hug</span></span>
+            </div>
+            <figcaption>Selection · Figma blue, only for "this is designed"</figcaption>
+          </figure>
+          <figure class="sg-cell">
+            <div class="sg-demo">
+              <figure class="comment">
+                <div class="comment-pin"><img src="images/my-avatar.webp" alt="" /></div>
+                <div class="comment-body">
+                  <figcaption class="comment-who"><b>Sameer</b><span>just now</span></figcaption>
+                  <p class="comment-text">Comments hold testimonials and design decisions.</p>
+                  <div class="comment-foot"><span class="resolved">✓ Resolved</span></div>
+                </div>
+              </figure>
+            </div>
+            <figcaption>Comment · testimonials, decisions</figcaption>
+          </figure>
+          <figure class="sg-cell">
+            <div class="sg-demo sg-row">
+              <div class="process-step sg-step"><span class="step-n">01</span><h3>Sketch</h3></div>
+              <div class="process-step sg-step sg-sketchy"><span class="step-n">02</span><h3>Wireframe</h3></div>
+            </div>
+            <figcaption>Process card · inked vs. sketch state</figcaption>
+          </figure>
+          <figure class="sg-cell">
+            <div class="sg-demo sg-center">
+              <button type="button" class="btn btn-line" id="sg-toast">Show a toast</button>
+            </div>
+            <figcaption>Toast · loading, success, error</figcaption>
+          </figure>
+          <figure class="sg-cell">
+            <div class="sg-demo sg-center">
+              <div class="sk xbox sg-x"><svg preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M3 3 L97 97 M97 3 L3 97" /></svg></div>
+            </div>
+            <figcaption>Wireframe placeholder · press W on the home page</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- PRINCIPLES -->
+      <section class="case-section container" aria-labelledby="sg-principles">
+        <h2 class="case-h" id="sg-principles"><span>04</span>Principles</h2>
+        <ol class="case-steps">
+          <li class="case-step"><span class="step-n">01</span><h3>Show the process</h3><p>Sketches, notes and selections are part of the story, not hidden behind it.</p></li>
+          <li class="case-step"><span class="step-n">02</span><h3>One accent</h3><p>Ultramarine marks what matters. Everything else stays paper and ink.</p></li>
+          <li class="case-step"><span class="step-n">03</span><h3>Motion with meaning</h3><p>Every animation shows progress: sketch to UI, frame to frame. Off when you ask for less motion.</p></li>
+          <li class="case-step"><span class="step-n">04</span><h3>Works without it</h3><p>No JavaScript, a slow phone or a screen reader still gets every word.</p></li>
+        </ol>
+      </section>
+      <div style="height: 120px"></div>
+    </main>
+
+    <div id="toast-region" class="toast-region" aria-live="polite"></div>
+    <script src="js/toast.js"></script>
+    <script src="js/styleguide.js"></script>
+    <script src="js/theme.js"></script>
+  </body>
+</html>

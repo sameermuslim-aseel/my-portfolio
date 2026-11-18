@@ -386,7 +386,7 @@ const SITE_DATA = {
           place: "Arizona, USA",
           about: "International Strategic Accelerator for Woman or iSAW helps enterprises make a dramatic impact for woman in their workplace that contributes to narrowing the gender equality gap globally.",
           points: [
-            "Managed organization›s website, overseeing user and content management.",
+            "Managed organization's website, overseeing user and content management.",
             "Conducted debugging and implemented new features to enhance website",
             "Evaluated and managed user engagement on the iSAW LIFT platform."
           ]
@@ -397,8 +397,8 @@ const SITE_DATA = {
           place: "Online",
           about: "Dynamic and versatile freelancer with a comprehensive skill set in web development, mobile application development, and graphic design. Successfully completed projects for prominent clients, including ali.com, babor.com, niyaz.design, and more.",
           points: [
-            "Developed and optimized responsive portfolio websites [niyaz.desgin](niyaz.design).",
-            "Launched a dynamic website for [The Triangle Tranch](https://thetriangletranch.com/) with intuitive sections and seamless booking functionality.",
+            "Developed and optimized responsive portfolio websites [niyaz.design](niyaz.design).",
+            "Launched a dynamic website for [The Triangle T Ranch](https://thetriangletranch.com/) with intuitive sections and seamless booking functionality.",
             "Designed graphics, logos, and marketing materials, contributing significantly to brand identity for various clients.",
             "Applied troubleshooting skills to refine website performance and ensure optimal functionality."
           ]
