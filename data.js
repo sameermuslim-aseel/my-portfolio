@@ -4,6 +4,10 @@
 // Text is plain text. To add a link inside any text, write [link text](https://example.com).
 
 const SITE_DATA = {
+  // Privacy-friendly visitor stats (no cookies). Create a free account at goatcounter.com,
+  // then put your code here, e.g. "sameer" for sameer.goatcounter.com. Empty = off.
+  analytics: { goatcounter: "" },
+
   // Featured projects shown as "design file" frames in the Work section (in order)
   caseStudies: [
     {
