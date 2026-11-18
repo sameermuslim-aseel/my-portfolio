@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype · The Issue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,700&family=Archivo:wght@400;500;700;800&family=Archivo+Narrow:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root { --paper: #f1ece2; --paper-2: #e9e2d4; --ink: #141210; --muted: #6f675c; --spot: #1636d8; --red: #e23b2e; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1a1816; color: var(--ink); font-family: Archivo, sans-serif; }
+  .paper { background-color: var(--paper); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  .book { height: 520vh; position: relative; }
+  .stage { position: sticky; top: 0; height: 100vh; overflow: hidden; perspective: 4200px; }
+
+  /* ---------- spreads (under the cover) ---------- */
+  .track { position: absolute; inset: 0; display: flex; will-change: transform; }
+  .spread { flex: none; width: 100vw; height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
+  .page { position: relative; padding: 56px 60px 70px; overflow: hidden; }
+  .page + .page { box-shadow: inset 24px 0 30px -24px rgba(0,0,0,.25); }
+  .page:first-child { box-shadow: inset -24px 0 30px -24px rgba(0,0,0,.25); }
+  .bleed { padding: 0; }
+  .bleed img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .caption { position: absolute; left: 28px; bottom: 26px; background: var(--paper); padding: 8px 12px; font: 500 12px "Archivo Narrow"; letter-spacing: 1px; text-transform: uppercase; }
+  .folio { position: absolute; bottom: 26px; left: 60px; right: 60px; display: flex; justify-content: space-between; font: 500 11px "Archivo Narrow"; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); border-top: 1px solid rgba(20,18,16,.2); padding-top: 10px; }
+  .kick { font: 700 12px "Archivo Narrow"; letter-spacing: 3px; text-transform: uppercase; color: var(--spot); }
+  .head { font-family: "Bodoni Moda"; font-weight: 700; font-size: 96px; line-height: .9; letter-spacing: -2px; margin: 16px 0 22px; }
+  .head i { font-weight: 400; }
+  .deck { font-family: "Bodoni Moda"; font-style: italic; font-size: 24px; line-height: 1.35; color: #3a342d; max-width: 560px; }
+  .cols { columns: 2; column-gap: 34px; margin-top: 30px; font-size: 15px; line-height: 1.6; color: #2c2823; }
+  .cols p + p { margin-top: 12px; }
+  .drop::first-letter { float: left; font-family: "Bodoni Moda"; font-weight: 900; font-size: 74px; line-height: .8; padding: 6px 10px 0 0; color: var(--spot); }
+  .pull { margin-top: 30px; border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 18px 0; font-family: "Bodoni Moda"; font-size: 30px; line-height: 1.2; }
+  .pull small { display: block; font: 600 12px "Archivo Narrow"; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; color: var(--muted); }
+  .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-top: 34px; }
+  .q { font-family: "Bodoni Moda"; font-size: 23px; line-height: 1.3; }
+  .q::before { content: "“"; display: block; font-size: 80px; line-height: .6; color: var(--spot); }
+  .q small { display: flex; gap: 10px; align-items: center; margin-top: 14px; font: 600 12px "Archivo Narrow"; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .q small img { width: 34px; height: 34px; border-radius: 50%; background: var(--paper-2); }
+  .back { background: var(--spot); color: #fff; display: flex; flex-direction: column; justify-content: center; }
+  .back .head { font-size: 120px; }
+  .back a { display: inline-block; margin-top: 30px; border: 2px solid #fff; padding: 16px 26px; font-weight: 700; font-size: 18px; }
+
+  /* ---------- cover ---------- */
+  .cover { position: absolute; inset: 0; z-index: 10; transform-origin: left center; backface-visibility: hidden; will-change: transform; box-shadow: 30px 0 60px rgba(0,0,0,.25); }
+  .strip { position: absolute; top: 26px; left: 44px; right: 44px; display: flex; justify-content: space-between; font: 700 13px "Archivo Narrow"; letter-spacing: 2.5px; text-transform: uppercase; }
+  .mast { position: absolute; top: 34px; left: 0; right: 0; text-align: center; font-family: "Bodoni Moda"; font-weight: 900; font-size: 21vw; line-height: .9; letter-spacing: -1vw; color: var(--ink); }
+  .cover-img { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 44vw; max-width: 640px; z-index: 2; filter: drop-shadow(0 30px 40px rgba(0,0,0,.25)); }
+  .lines { position: absolute; left: 44px; bottom: 60px; width: 26vw; z-index: 3; }
+  .lines .big { font-family: "Bodoni Moda"; font-style: italic; font-size: 54px; line-height: .95; }
+  .lines .big b { font-style: normal; color: var(--spot); }
+  .line { margin-top: 20px; padding-top: 12px; border-top: 2px solid var(--ink); }
+  .line b { display: block; font: 800 22px Archivo; letter-spacing: -.3px; }
+  .line span { font-size: 15px; color: #3e3830; }
+  .line em { font-style: normal; font: 700 13px "Archivo Narrow"; color: var(--spot); letter-spacing: 1px; }
+  .right { position: absolute; right: 44px; bottom: 60px; width: 22vw; text-align: right; z-index: 3; }
+  .stat { font-family: "Bodoni Moda"; font-weight: 900; font-size: 96px; line-height: .85; }
+  .stat small { display: block; font: 700 13px "Archivo Narrow"; letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
+  .sticker { position: absolute; right: 23vw; top: 41vh; z-index: 4; width: 170px; height: 170px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; text-align: center; transform: rotate(12deg); font: 800 17px/1.15 Archivo; padding: 18px; box-shadow: 0 10px 24px rgba(0,0,0,.2); }
+  .sticker small { display: block; font: 600 11px "Archivo Narrow"; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .barcode { margin-top: 30px; display: inline-flex; flex-direction: column; align-items: flex-end; background: #fff; padding: 10px 12px 6px; }
+  .barcode svg { width: 150px; height: 46px; }
+  .barcode span { font: 500 10px "Archivo Narrow"; letter-spacing: 2px; }
+  .hint { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 20; color: #fff; background: var(--ink); font: 700 12px "Archivo Narrow"; letter-spacing: 2px; text-transform: uppercase; padding: 8px 16px; transition: opacity .3s; }
+</style>
+</head>
+<body>
+<section class="book">
+  <div class="stage">
+
+    <div class="track" id="track">
+      <!-- spread 1 -->
+      <div class="spread">
+        <div class="page bleed"><img src="../images/banners/aseel-banner.webp" alt="" /><span class="caption">Buy Good marketplace · Aseel, 2025</span></div>
+        <div class="page paper">
+          <p class="kick">Cover story · p. 04</p>
+          <h2 class="head">The <i>marketplace</i> for makers</h2>
+          <p class="deck">How a product team set out to connect artisans in underserved communities with buyers around the world.</p>
+          <div class="cols"><p class="drop">As Product Manager for Buy Good, Sameer leads the product end to end: user research with sellers and buyers, UX and UI audits, and a roadmap aligned with Aseel's goals.</p><p>Before that, as UI/UX designer, he redesigned the Sell Good platform and the seller landing page, keeping the design system consistent and accessible.</p></div>
+          <div class="folio"><span>Sameer · The Product Issue</span><span>04</span></div>
+        </div>
+      </div>
+      <!-- spread 2 -->
+      <div class="spread">
+        <div class="page paper">
+          <p class="kick">Side project · p. 08</p>
+          <h2 class="head">Tikko, <i>in Persian</i></h2>
+          <p class="deck">A family to-do app designed right-to-left from day one, where green means one thing only: done.</p>
+          <div class="pull">“Keep everything monochrome, so the green tick feels like a reward.”<small>Design principle · Tikko</small></div>
+          <div class="cols"><p class="drop">One person in the household assigns recurring daily tasks; everyone else ticks them off in a simple “today” view, with streaks and stats to keep it fun. Built as a PWA with Next.js and Supabase.</p></div>
+          <div class="folio"><span>08</span><span>Sameer · The Product Issue</span></div>
+        </div>
+        <div class="page bleed"><img src="../images/banners/tikko-banner.webp" alt="" /><span class="caption">Tikko · mobile PWA, 2026</span></div>
+      </div>
+      <!-- spread 3 -->
+      <div class="spread">
+        <div class="page paper">
+          <p class="kick">Letters · p. 12</p>
+          <h2 class="head">Kind <i>words</i></h2>
+          <div class="quotes">
+            <div class="q">A very bright young man with excellent credentials.<small><img src="../images/Rod.webp" alt="" />Rod A. McLeod · Publisher</small></div>
+            <div class="q">A highly skilled technical developer and designer.<small><img src="../images/nancy-avatar.webp" alt="" />Nancy Speidel · iSAW</small></div>
+            <div class="q">Very concerned about the needs of the client.<small><img src="../images/Niyaz-avatar.webp" alt="" />Niyaz M. Khairy</small></div>
+            <div class="q">Committed, flexible, understands other business areas.<small><img src="../images/Wares-avatar.webp" alt="" />Wares Muhammadi · Wama</small></div>
+          </div>
+          <div class="folio"><span>12</span><span>Sameer · The Product Issue</span></div>
+        </div>
+        <div class="page back">
+          <p class="kick" style="color:#c9d2ff">Back cover</p>
+          <h2 class="head">Let's make the next issue together.</h2>
+          <a>iamsameerdev@gmail.com →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- COVER -->
+    <div class="cover paper" id="cover">
+      <div class="strip"><span>Vol. 07 — Autumn 2026</span><span>Product Design · Research · Frontend</span><span>Free · Online edition</span></div>
+      <div class="mast">SAMEER</div>
+      <img class="cover-img" src="../images/my-avatar1.webp" alt="" />
+      <div class="lines">
+        <div class="big">The <b>Product</b> Issue</div>
+        <div class="line"><em>p. 04 →</em><b>Buy Good</b><span>Designing a marketplace for artisans</span></div>
+        <div class="line"><em>p. 08 →</em><b>Tikko</b><span>A Persian family app, built from scratch</span></div>
+      </div>
+      <div class="sticker"><div><small>NOW</small>Product Manager at Aseel</div></div>
+      <div class="right">
+        <div class="stat">4+<small>years of UI/UX</small></div>
+        <div class="stat" style="margin-top:22px">11<small>projects inside</small></div>
+        <div class="barcode"><svg viewBox="0 0 150 46" id="bars"></svg><span>ISSN SAMEER-MUSLIM-07</span></div>
+      </div>
+    </div>
+    <div class="hint" id="hint">Scroll to open the issue ↓</div>
+  </div>
+</section>
+
+<script>
+  // barcode
+  let x = 0, bars = "";
+  while (x < 150) { const w = [1, 1, 2, 3][Math.floor(Math.random() * 4)]; if (Math.random() > 0.35) bars += `<rect x="${x}" y="0" width="${w}" height="46" fill="#141210"/>`; x += w + 1; }
+  document.getElementById("bars").innerHTML = bars;
+
+  const book = document.querySelector(".book");
+  const cover = document.getElementById("cover");
+  const track = document.getElementById("track");
+  const spreads = track.children.length;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+
+  function render() {
+    const p = clamp(scrollY / (book.offsetHeight - innerHeight), 0, 1);
+    // 0 → .25: the cover swings open like a page
+    const open = ease(clamp(p / 0.25, 0, 1));
+    cover.style.transform = `rotateY(${-open * 115}deg) scale(${1 - open * 0.08})`;
+    cover.style.filter = `brightness(${1 - open * 0.35})`; // page falls into shadow as it turns
+    cover.style.visibility = open >= 1 ? "hidden" : "visible";
+    // .3 → 1: slide through the spreads
+    const slide = clamp((p - 0.3) / 0.7, 0, 1) * (spreads - 1);
+    const i = Math.floor(slide), t = ease(slide - i);
+    track.style.transform = `translateX(${-(i + t) * 100}vw)`;
+    document.getElementById("hint").style.opacity = p > 0.02 ? 0 : 1;
+  }
+  addEventListener("scroll", () => requestAnimationFrame(render), { passive: true });
+  addEventListener("resize", render);
+  render();
+</script>
+</body>
+</html>
