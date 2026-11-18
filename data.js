@@ -427,7 +427,7 @@ const SITE_DATA = {
           place: "Online",
           about: "Dynamic and versatile freelancer with a comprehensive skill set in web development, mobile application development, and graphic design. Successfully completed projects for prominent clients, including ali.com, babor.com, niyaz.design, and more.",
           points: [
-            "Developed and optimized responsive portfolio websites [niyaz.design](niyaz.design).",
+            "Developed and optimized responsive portfolio websites [niyaz.design](https://niyaz.design).",
             "Launched a dynamic website for [The Triangle T Ranch](https://thetriangletranch.com/) with intuitive sections and seamless booking functionality.",
             "Designed graphics, logos, and marketing materials, contributing significantly to brand identity for various clients.",
             "Applied troubleshooting skills to refine website performance and ensure optimal functionality."
