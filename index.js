@@ -8,39 +8,60 @@ const mapIfrem = document.getElementById("map-container");
 const mapSrc =
   "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d18301.937956932157!2d67.11375233052213!3d36.71107776030838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1704266137782!5m2!1sen!2s";
 
-// Close dialog on "Escape" key press
+// Element that opened the dialog, so focus can return to it on close
+let lastFocusedItem = null;
+
+function openDialog(item) {
+  updateDialog(item);
+  lastFocusedItem = item;
+  dialogPanel.classList.add("active");
+  overlayPanel.classList.add("active");
+  // The dialog box fades in, and can't take focus until it is visible
+  setTimeout(() => dialogCloseBtn.focus(), 300);
+}
+
+function closeDialog() {
+  dialogPanel.classList.remove("active");
+  overlayPanel.classList.remove("active");
+  if (lastFocusedItem) {
+    lastFocusedItem.focus();
+  }
+}
+
+// Close dialog on "Escape" key press, keep Tab inside it while open
 document.addEventListener("keydown", function (event) {
-  // Check if the pressed key is the "Escape" key (key code 27)
-  if (event.key === "Escape" || event.keyCode === 27) {
-    if (dialogPanel && dialogPanel.classList.contains("active")) {
-      // Your code to handle the "Escape" key press goes here
-      dialogPanel.classList.remove("active");
-      overlayPanel.classList.remove("active");
-    }
+  if (!dialogPanel.classList.contains("active")) return;
+
+  if (event.key === "Escape") {
+    closeDialog();
+  } else if (event.key === "Tab") {
+    // The close button is the only focusable element in the dialog
+    event.preventDefault();
+    dialogCloseBtn.focus();
   }
 });
 
-// Add click listeners for dialog toggle
-dialogCloseBtn.addEventListener("click", toggleDialog);
-overlayPanel.addEventListener("click", toggleDialog);
-
-function toggleDialog() {
-  dialogPanel.classList.toggle("active");
-  overlayPanel.classList.toggle("active");
-}
+// Add click listeners for dialog close
+dialogCloseBtn.addEventListener("click", closeDialog);
+overlayPanel.addEventListener("click", closeDialog);
 
 // Toggle left side on button click
 showContactsBtn.addEventListener("click", function () {
-  leftSide.classList.toggle("active");
+  const isOpen = leftSide.classList.toggle("active");
+  showContactsBtn.setAttribute("aria-expanded", isOpen);
 });
 
-// Add click listeners for testimonial items
+// Open a testimonial with a click, or with Enter / Space from the keyboard
 const testimonialsItem = document.querySelectorAll(".card-item.team");
 testimonialsItem.forEach(function (item) {
   item.addEventListener("click", function () {
-    toggleDialog();
-    // Retrieve data for dialog
-    updateDialog(item);
+    openDialog(item);
+  });
+  item.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openDialog(item);
+    }
   });
 });
 
@@ -70,31 +91,39 @@ function updateDialog(item) {
   dialogDate.textContent = itemDate;
 }
 
-const menuItems = document.querySelectorAll(".menu-bar-link ");
+// Sections are linked by hash (#about, #resume, ...) so each tab has its own URL
+const menuItems = document.querySelectorAll(".menu-bar-link");
+const sections = document.querySelectorAll(".the-section");
 
-// Add click event listener to each menu item
-menuItems.forEach((item) => {
-  item.addEventListener("click", function () {
-    // Remove "active" class from all menu items
-    menuItems.forEach((item) => item.classList.remove("active"));
+function showSection(sectionName) {
+  const clickedSection = document.getElementById(sectionName + "-section");
+  if (!clickedSection) return;
 
-    // Add "active" class to the clicked menu item
-    this.classList.add("active");
-
-    if (this.textContent.trim() === "Contact") {
-      mapIfrem.src = mapSrc;
+  menuItems.forEach((item) => {
+    const isActive = item.dataset.section === sectionName;
+    item.classList.toggle("active", isActive);
+    if (isActive) {
+      item.setAttribute("aria-current", "page");
+    } else {
+      item.removeAttribute("aria-current");
     }
-
-    // Hide all sections
-    const sections = document.querySelectorAll(".the-section");
-    sections.forEach((section) => section.classList.remove("active"));
-
-    // Show the corresponding section
-    const sectionName = this.textContent.trim().toLowerCase() + "-section";
-    const clickedSection = document.querySelector(`.${sectionName}`);
-    clickedSection.classList.add("active");
   });
-});
+
+  sections.forEach((section) => section.classList.remove("active"));
+  clickedSection.classList.add("active");
+
+  // Load the map only when the Contact tab is opened
+  if (sectionName === "contact" && !mapIfrem.getAttribute("src")) {
+    mapIfrem.src = mapSrc;
+  }
+}
+
+function showSectionFromHash() {
+  showSection(location.hash.slice(1) || "about");
+}
+
+window.addEventListener("hashchange", showSectionFromHash);
+showSectionFromHash();
 
 document.addEventListener("DOMContentLoaded", function () {
   // Get all category buttons
@@ -183,49 +212,33 @@ form.addEventListener("submit", function (e) {
     });
 });
 
+// Light / dark mode. The <head> script already applied the saved theme,
+// or the visitor's system theme on a first visit.
 const mode_toggle_btn = document.getElementById("mode-toggle-btn");
 const mode_btn = document.getElementById("mood-btn");
 const mode_icon = document.getElementById("mood-icon");
+const root = document.documentElement;
 
-let lightMode = localStorage.getItem("light-mode");
-
-const enableLightMode = () => {
-  // 1. Add the class to the body
-  document.body.classList.add("light-mode");
-  mode_btn.classList.add("light-mode");
-  mode_icon.src = "images/moon.svg";
-
-  // 2. Update darkMode in localStorage
-  localStorage.setItem("light-mode", "enabled");
-};
-
-const disableLightMode = () => {
-  // 1. Remove the class from the body
-  document.body.classList.remove("light-mode");
-  mode_btn.classList.remove("light-mode");
-  mode_icon.src = "images/sun.svg";
-  // 2. Update darkMode in localStorage
-  localStorage.setItem("light-mode", null);
-};
-
-// If the user already visited and enabled darkMode
-// start things off with it on
-if (lightMode === "enabled") {
-  enableLightMode();
-} else {
-  disableLightMode();
+function saveTheme(value) {
+  try {
+    localStorage.setItem("light-mode", value);
+  } catch (e) {
+    // Storage can be blocked (private mode); the toggle still works
+  }
 }
+
+function applyTheme(isLight) {
+  root.classList.toggle("light-mode", isLight);
+  mode_btn.classList.toggle("light-mode", isLight);
+  mode_icon.src = isLight ? "images/moon.svg" : "images/sun.svg";
+  mode_toggle_btn.setAttribute("aria-pressed", isLight);
+}
+
+applyTheme(root.classList.contains("light-mode"));
 
 // When someone clicks the button
 mode_toggle_btn.addEventListener("click", () => {
-  // get their darkMode setting
-  lightMode = localStorage.getItem("light-mode");
-
-  // if it not current enabled, enable it
-  if (lightMode !== "enabled") {
-    enableLightMode();
-    // if it has been enabled, turn it off
-  } else {
-    disableLightMode();
-  }
+  const isLight = !root.classList.contains("light-mode");
+  applyTheme(isLight);
+  saveTheme(isLight ? "enabled" : "disabled");
 });

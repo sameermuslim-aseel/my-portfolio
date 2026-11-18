@@ -278,7 +278,7 @@ body {
   box-shadow: var(--shadow-4);
   transition: var(--transition-1);
   z-index: 1;
-  p {
+  span {
     color: var(--ops-text-color);
     letter-spacing: 0.5px;
   }
@@ -1065,6 +1065,7 @@ add scrollbar color */
   margin: 25px;
 }
 .card-blog-details .card-blog-big-title {
+  font-size: 24px;
   margin-block: 15px;
   color: var(--white-1);
 }
@@ -1824,7 +1825,7 @@ add scrollbar color */
     top: -25px;
   }
 
-  .show-contacts-btn #show-contatcts-text {
+  .show-contacts-btn #show-contacts-text {
     display: none;
   }
   .show-contacts-btn #down-arrow {
@@ -1832,5 +1833,28 @@ add scrollbar color */
   }
   .card-item-blog .blog-banner {
     height: 250px;
+  }
+}
+
+/* Accessibility */
+
+/* Visible focus ring for keyboard users only */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--icon-color);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Respect visitors who turned off animations in their OS */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
